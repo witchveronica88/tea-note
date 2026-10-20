@@ -57,11 +57,12 @@ i{font-style:italic}
 #main{flex:1; min-width:0; position:relative; min-height:100%}
 /* 글자 크기 토큰 4단계(--fs-xl 24 · --fs-l 18 · --fs-m 16 · --fs-s 14). font-size에는 이 토큰만 쓴다.
    읽기 글자 크기 3단계: 기본 16px → 조금 크게 18px → 크게 24px
-   --ts는 목차·홈 목록·검색 결과에 쓰는 배율(기본에서는 지금 크기 그대로) */
-html{--fs-xl:24px; --fs-l:18px; --fs-m:16px; --fs-s:14px; --ts:1.12; --reading-size:var(--fs-m)}
-html[data-text-size="medium"]{--ts:1.28; --reading-size:var(--fs-l)}
-html[data-text-size="large"]{--ts:1.44; --reading-size:var(--fs-xl)}
-#inner{max-width:560px; margin:0 auto; padding:28px 24px 160px; font-size:var(--reading-size); --fs:var(--reading-size)}
+   --rs는 읽기 본문 배율(1 · 1.125 · 1.5), --ts는 목차·홈 목록·검색 결과 배율(1 · 1.14 · 1.29).
+   배율이 필요한 곳은 calc(var(--fs-m) * var(--rs))처럼 토큰에 곱한다 */
+html{--fs-xl:24px; --fs-l:18px; --fs-m:16px; --fs-s:14px; --ts:1; --rs:1}
+html[data-text-size="medium"]{--ts:1.14; --rs:1.125}
+html[data-text-size="large"]{--ts:1.29; --rs:1.5}
+#inner{max-width:560px; margin:0 auto; padding:28px 24px 160px; font-size:calc(var(--fs-m) * var(--rs)); --fs:calc(var(--fs-m) * var(--rs))}
 
 /* ---------- 상단 머리줄(현재 위치) ---------- */
 #crumb{
@@ -202,8 +203,8 @@ body.side-hidden #side{display:none}
 #empty{padding:36px 14px; text-align:center; color:var(--sub); font-size:var(--fs-m)}
 
 /* ---------- 본문 ---------- */
-.doc-title{font-size:1.47em; font-weight:800; line-height:1.3; letter-spacing:-.03em; margin:4px 0 6px; text-wrap:balance}
-.doc-sub{font-size:.9em; color:var(--sub); margin:0 0 26px}
+.doc-title{font-size:calc(var(--fs-xl) * var(--rs)); font-weight:800; line-height:1.3; letter-spacing:-.03em; margin:4px 0 6px; text-wrap:balance}
+.doc-sub{font-size:calc(var(--fs-s) * var(--rs)); color:var(--sub); margin:0 0 26px}
 
 .sec1{position:relative}
 .sec2{position:relative; padding-left:0}
@@ -212,24 +213,24 @@ body.side-hidden #side{display:none}
 }
 
 /* 강(부) 제목: 누르면 접히는 줄이므로 회색 바탕 */
-h1.b{font-size:1.2em; font-weight:800; line-height:1.4; margin:28px 0 16px; scroll-margin-top:calc(var(--hdr-h) + 12px)}
-h1.b:has(.lesson-toggle){margin:22px 0 14px; font-size:1.07em; font-weight:700}
+h1.b{font-size:calc(var(--fs-l) * var(--rs)); font-weight:800; line-height:1.4; margin:28px 0 16px; scroll-margin-top:calc(var(--hdr-h) + 12px)}
+h1.b:has(.lesson-toggle){margin:22px 0 14px; font-size:calc(var(--fs-l) * var(--rs)); font-weight:700}
 .lesson-toggle{
   display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%;
   padding:13px 16px; border:0; border-radius:10px; background:var(--row); color:inherit;
   font:inherit; font-weight:inherit; text-align:left; cursor:pointer;
 }
 .lesson-toggle:hover{background:var(--row-hover)}
-.lesson-toggle-arrow{flex:0 0 auto; font-size:.65em; color:var(--accent); transition:transform .15s}
+.lesson-toggle-arrow{flex:0 0 auto; font-size:calc(var(--fs-s) * var(--rs)); color:var(--accent); transition:transform .15s}
 .sec1.collapsed .lesson-toggle-arrow{transform:rotate(-90deg)}
 .sec1.collapsed>.b:not(h1),.sec1.collapsed>.sec2,.sec1.collapsed>.tbl-wrap,.sec1.collapsed>.note{display:none}
 /* 시음노트의 '테이스팅 기록'처럼 접지 않는 제목 */
-.sec1:not([data-collapsible])>h1.b{font-size:1.07em; font-weight:700; padding-bottom:10px; border-bottom:1px solid var(--line)}
+.sec1:not([data-collapsible])>h1.b{font-size:calc(var(--fs-l) * var(--rs)); font-weight:700; padding-bottom:10px; border-bottom:1px solid var(--line)}
 
-h2.b{font-size:1.07em; font-weight:700; line-height:1.5; margin:32px 0 10px; color:var(--ink); text-wrap:balance; scroll-margin-top:calc(var(--hdr-h) + 12px)}
+h2.b{font-size:calc(var(--fs-l) * var(--rs)); font-weight:700; line-height:1.5; margin:32px 0 10px; color:var(--ink); text-wrap:balance; scroll-margin-top:calc(var(--hdr-h) + 12px)}
 h2.b.memo{color:var(--sub); padding-top:18px; border-top:1px dashed var(--line)}
-h3.b{font-size:1em; font-weight:700; line-height:1.55; margin:24px 0 8px; color:var(--ink)}
-h4.b{font-size:.95em; font-weight:700; line-height:1.55; margin:18px 0 6px; color:var(--ink2)}
+h3.b{font-size:calc(var(--fs-m) * var(--rs)); font-weight:700; line-height:1.55; margin:24px 0 8px; color:var(--ink)}
+h4.b{font-size:calc(var(--fs-m) * var(--rs)); font-weight:700; line-height:1.55; margin:18px 0 6px; color:var(--ink2)}
 
 p.b{margin:8px 0; line-height:1.85}
 p.bul{position:relative; padding-left:16px}
@@ -240,19 +241,19 @@ p.i2.bul::before{content:"\25E6"; color:var(--sub)}
 p.i3{margin-left:40px}
 p.i3.bul::before{content:"\2013"; color:var(--sub)}
 p.note,p.note.i1,p.note.i2,p.note.i3{margin-left:0}
-p.note{font-size:.88em; line-height:1.75; color:var(--sub); margin:12px 0 16px; padding-left:12px; border-left:2px solid var(--line)}
-p.tasting-memo{font-size:1em; line-height:1.85; color:var(--ink); margin:8px 0; padding-left:0; border-left:0}
+p.note{font-size:calc(var(--fs-s) * var(--rs)); line-height:1.75; color:var(--sub); margin:12px 0 16px; padding-left:12px; border-left:2px solid var(--line)}
+p.tasting-memo{font-size:calc(var(--fs-m) * var(--rs)); line-height:1.85; color:var(--ink); margin:8px 0; padding-left:0; border-left:0}
 
 /* 표 */
 .tbl-wrap{overflow-x:auto; margin:18px 0 22px; -webkit-overflow-scrolling:touch}
-table{border-collapse:collapse; width:100%; font-size:.9em; line-height:1.65; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:calc(var(--fs-s) * var(--rs)); line-height:1.65; background:var(--surface)}
 th,td{border:1px solid var(--line); padding:10px 12px; vertical-align:top; text-align:left}
 th{background:var(--row); font-weight:700; white-space:nowrap}
 td div+div{margin-top:3px}
-.cell-src{font-size:.85em; color:var(--sub); font-style:normal}
-#inner[data-doc="chr"] table{table-layout:fixed; font-size:var(--reading-size)}
-#inner[data-doc="chr"] td>.cell-value>div:not(.cell-src){font-size:var(--reading-size)}
-#inner[data-doc="chr"] .cell-src{font-size:.88em}
+.cell-src{font-size:calc(var(--fs-s) * var(--rs)); color:var(--sub); font-style:normal}
+#inner[data-doc="chr"] table{table-layout:fixed; font-size:calc(var(--fs-m) * var(--rs))}
+#inner[data-doc="chr"] td>.cell-value>div:not(.cell-src){font-size:calc(var(--fs-m) * var(--rs))}
+#inner[data-doc="chr"] .cell-src{font-size:calc(var(--fs-s) * var(--rs))}
 #inner[data-doc="chr"] th:first-child,#inner[data-doc="chr"] td:first-child{width:128px}
 
 mark{background:var(--hit); color:inherit; padding:1px 0; border-radius:2px}
@@ -261,8 +262,8 @@ mark.cur{background:var(--hit-cur); box-shadow:0 0 0 1.5px var(--hit-ring)}
 /* 시음노트 */
 .tasting-facts{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; margin:0 0 24px; background:var(--line); border:1px solid var(--line); border-radius:12px; overflow:hidden}
 .tasting-facts>div{padding:12px 14px; background:var(--surface)}
-.tasting-facts dt{font-size:.87em; color:var(--sub); margin:0 0 2px}
-.tasting-facts dd{font-size:1em; font-weight:700; margin:0; font-variant-numeric:tabular-nums}
+.tasting-facts dt{font-size:calc(var(--fs-s) * var(--rs)); color:var(--sub); margin:0 0 2px}
+.tasting-facts dd{font-size:calc(var(--fs-m) * var(--rs)); font-weight:700; margin:0; font-variant-numeric:tabular-nums}
 .tasting-gallery{margin:0 0 24px}
 .tasting-gallery figure{margin:0}
 .tasting-gallery img{display:block; max-width:100%; height:auto; border-radius:10px}
@@ -326,7 +327,7 @@ button:focus-visible,input:focus-visible,.doc-group-head:focus-visible,.toc-item
   .tbl-wrap tr:first-child{display:none}
   .tbl-wrap td{display:grid; grid-template-columns:minmax(80px,32%) minmax(0,1fr); gap:10px; border:0; border-bottom:1px solid var(--line); padding:10px 12px; overflow-wrap:anywhere}
   .tbl-wrap td:last-child{border-bottom:0}
-  .tbl-wrap td::before{content:attr(data-label); grid-column:1; grid-row:1; font-size:.87em; font-weight:700; color:var(--sub); line-height:1.6}
+  .tbl-wrap td::before{content:attr(data-label); grid-column:1; grid-row:1; font-size:calc(var(--fs-s) * var(--rs)); font-weight:700; color:var(--sub); line-height:1.6}
   .tbl-wrap td>*{grid-column:2}
   .tbl-wrap td>.cell-value{grid-row:1; min-width:0}
   #inner[data-doc="chr"] table{table-layout:auto}
@@ -363,11 +364,11 @@ button:focus-visible,input:focus-visible,.doc-group-head:focus-visible,.toc-item
 .tasting-facts{display:block; margin:0 0 24px; background:var(--surface); border:1px solid var(--line); border-radius:12px; overflow:hidden}
 .tasting-facts>div{display:flex; align-items:baseline; gap:12px; padding:11px 14px; border-top:1px solid var(--line); background:var(--surface)}
 .tasting-facts>div:first-child{border-top:0}
-.tasting-facts dt{flex:0 0 52px; margin:0; font-size:.87em; color:var(--sub)}
+.tasting-facts dt{flex:0 0 52px; margin:0; font-size:calc(var(--fs-s) * var(--rs)); color:var(--sub)}
 .tasting-facts dd{flex:1; min-width:0; margin:0; font-weight:700}
 .tasting-facts .fp-per{color:var(--accent)}
 .tasting-facts .fp-rec::before{content:'·'; margin:0 6px 0 2px}
-.tasting-facts .fp-rec{margin-left:0; font-size:.87em; font-weight:500; color:var(--sub); white-space:nowrap}
+.tasting-facts .fp-rec{margin-left:0; font-size:calc(var(--fs-s) * var(--rs)); font-weight:500; color:var(--sub); white-space:nowrap}
 
 .home-card{background:var(--surface); border:1px solid var(--line); border-radius:12px; overflow:hidden}
 .home-card button{display:flex; flex-direction:column; align-items:flex-start; gap:3px; width:100%; padding:13px 16px; border:0; border-top:1px solid var(--line); background:none; color:var(--ink); font:inherit; font-size:var(--fs-m); text-align:left; cursor:pointer}
@@ -390,7 +391,7 @@ button:focus-visible,input:focus-visible,.doc-group-head:focus-visible,.toc-item
 
 /* ---------- 홈 화면 다듬기: 검색을 가장 돋보이게, 최근 목록은 차분하게 ---------- */
 #inner[data-doc="home"]{padding-top:34px}
-#inner[data-doc="home"] .doc-title{font-size:1.75em; margin-bottom:4px}
+#inner[data-doc="home"] .doc-title{font-size:calc(var(--fs-xl) * var(--rs)); margin-bottom:4px}
 #inner[data-doc="home"] .doc-sub{margin-bottom:0}
 #homeSearch{margin-top:20px}
 #homeSearch .searchbox{margin:0 0 12px}
