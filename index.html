@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:16px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>차 노트</title>
 <style>
 /* 차 노트 — 장식보다 정보 위계를 앞세운 단정한 단일 테마
@@ -38,7 +38,7 @@ html{
 body{
   margin:0; min-height:calc(100vh + 1px); height:auto; overflow:visible;
   overscroll-behavior:none;
-  font-family:var(--font); font-size:15px; line-height:1.8; letter-spacing:-.01em;
+  font-family:var(--font); font-size:17px; line-height:1.8; letter-spacing:-.01em;
   background:var(--bg); color:var(--ink);
 }
 button{font-family:inherit}
@@ -56,9 +56,9 @@ i{font-style:italic}
 /* 글자 크기 3단계: 기본(가장 작게) 15.5px → 조금 크게 18px → 크게 20.5px
    (예전 가장 작은 단계 13.5px는 없애고, 예전 중간 단계를 기본으로 삼았다)
    --ts는 목차·홈 목록·검색 결과에 쓰는 배율(기본에서는 지금 크기 그대로) */
-html{--ts:1.12; --reading-size:15.5px}
-html[data-text-size="medium"]{--ts:1.28; --reading-size:18px}
-html[data-text-size="large"]{--ts:1.44; --reading-size:20.5px}
+html{--ts:1.12; --reading-size:18px}
+html[data-text-size="medium"]{--ts:1.28; --reading-size:21px}
+html[data-text-size="large"]{--ts:1.44; --reading-size:23px}
 #inner{max-width:560px; margin:0 auto; padding:28px 24px 160px; font-size:var(--reading-size); --fs:var(--reading-size)}
 
 /* ---------- 상단 머리줄(현재 위치) ---------- */
@@ -70,7 +70,7 @@ html[data-text-size="large"]{--ts:1.44; --reading-size:20.5px}
 #tocToggle{
   flex:0 0 auto; display:inline-flex; align-items:center; gap:6px; height:34px; padding:0 12px;
   border:1px solid var(--line); border-radius:9px; background:var(--surface); color:var(--accent);
-  font-size:14px; font-weight:700; cursor:pointer;
+  font-size:16px; font-weight:700; cursor:pointer;
 }
 #tocToggle:hover{background:var(--row)}
 #backBtn[hidden],#homeBtn[hidden]{display:none}
@@ -78,7 +78,7 @@ html[data-text-size="large"]{--ts:1.44; --reading-size:20.5px}
 body.side-hidden #side{display:none}
 #crumbPath{
   display:block; flex:1; min-width:0;
-  font-size:13px; color:var(--sub); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  font-size:15px; color:var(--sub); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
 #crumb .seg{color:var(--sub)}
 #crumb .seg.cur{color:var(--accent); font-weight:700}
@@ -101,9 +101,9 @@ body.side-hidden #side{display:none}
 .text-size-control{display:flex; justify-content:flex-end}
 .text-size-options{display:flex; gap:3px; padding:3px; background:var(--row); border-radius:9px}
 .text-size-option{min-width:38px; height:30px; padding:0 8px; border:0; border-radius:7px; background:transparent; color:var(--sub); font-weight:700; cursor:pointer}
-.text-size-option[data-size="small"]{font-size:14px}
-.text-size-option[data-size="medium"]{font-size:17px}
-.text-size-option[data-size="large"]{font-size:20px}
+.text-size-option[data-size="small"]{font-size:16px}
+.text-size-option[data-size="medium"]{font-size:19px}
+.text-size-option[data-size="large"]{font-size:23px}
 .text-size-option[aria-pressed="true"]{background:var(--surface); color:var(--accent)}
 
 /* 검색창 */
@@ -111,27 +111,27 @@ body.side-hidden #side{display:none}
 .searchbox svg{position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--sub); pointer-events:none}
 #q{
   width:100%; min-height:42px; padding:10px 12px 10px 36px; border:1px solid var(--line); border-radius:10px;
-  font:inherit; font-size:15px; background:var(--surface); color:var(--ink); -webkit-appearance:none; appearance:none;
+  font:inherit; font-size:17px; background:var(--surface); color:var(--ink); -webkit-appearance:none; appearance:none;
 }
 #q::placeholder{color:var(--sub)}
 #q:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
 #searchnav{display:flex; align-items:center; gap:8px}
 #searchnav button{
   width:34px; height:32px; border-radius:8px; border:1px solid var(--line); background:var(--surface);
-  color:var(--ink2); font-size:14px; cursor:pointer;
+  color:var(--ink2); font-size:16px; cursor:pointer;
 }
 #searchnav button:disabled{opacity:.35; cursor:default}
-#navcount{flex:1; text-align:center; font-size:13px; color:var(--sub); font-variant-numeric:tabular-nums}
+#navcount{flex:1; text-align:center; font-size:15px; color:var(--sub); font-variant-numeric:tabular-nums}
 
 /* 목차 머리: 탭 + 전체 펼치기 */
 .toc-toolbar{position:sticky; top:0; z-index:3; background:var(--surface); padding:14px 0 8px; margin-bottom:6px; border-bottom:1px solid var(--line)}
 .toc-tabs{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:3px; padding:3px; background:var(--row); border-radius:10px}
-.toc-tab{min-height:38px; padding:0 2px; white-space:nowrap; border:0; border-radius:8px; background:transparent; color:var(--sub); font-size:13.5px; font-weight:700; cursor:pointer}
+.toc-tab{min-height:38px; padding:0 2px; white-space:nowrap; border:0; border-radius:8px; background:transparent; color:var(--sub); font-size:15px; font-weight:700; cursor:pointer}
 .toc-tab[aria-selected="true"]{background:var(--surface); color:var(--accent)}
 .toc-actions{display:flex; justify-content:flex-end; padding:8px 0 0}
-.toc-expand-all{border:0; background:transparent; color:var(--accent); font-size:13px; font-weight:700; cursor:pointer; padding:4px 6px; border-radius:6px}
+.toc-expand-all{border:0; background:transparent; color:var(--accent); font-size:15px; font-weight:700; cursor:pointer; padding:4px 6px; border-radius:6px}
 .toc-panel[hidden]{display:none}
-.collection-label{display:flex; justify-content:space-between; padding:12px 4px 8px; color:var(--sub); font-size:13px; font-weight:700}
+.collection-label{display:flex; justify-content:space-between; padding:12px 4px 8px; color:var(--sub); font-size:15px; font-weight:700}
 .collection-count{font-weight:500; font-variant-numeric:tabular-nums}
 
 /* 펼치는 줄(목차): 모두 회색 바탕 */
@@ -139,17 +139,17 @@ body.side-hidden #side{display:none}
 .doc-group-head,.lesson-section-head{
   display:flex; align-items:center; justify-content:space-between; gap:10px; width:100%;
   padding:12px 14px; border:0; border-radius:10px; background:var(--row); color:var(--ink);
-  font-size:15px; font-weight:700; line-height:1.5; text-align:left; cursor:pointer;
+  font-size:17px; font-weight:700; line-height:1.5; text-align:left; cursor:pointer;
 }
 .doc-group-head:hover,.lesson-section-head:hover{background:var(--row-hover)}
 .doc-group.open>.doc-group-head,.doc-group.current>.doc-group-head{color:var(--accent)}
-.dgh-arrow{flex:0 0 auto; font-size:11px; color:var(--sub); transition:transform .15s}
+.dgh-arrow{flex:0 0 auto; font-size:13px; color:var(--sub); transition:transform .15s}
 .doc-group.open>.doc-group-head .dgh-arrow,
 .lesson-section-nav.open>.lesson-section-head .dgh-arrow{transform:rotate(180deg); color:var(--accent)}
 .doc-group-list{display:none; padding:8px 0 4px}
 .doc-group.open .doc-group-list{display:block}
 .lesson-section-nav{margin:0 0 6px 10px}
-.lesson-section-head{padding:10px 12px; font-size:14px; font-weight:650}
+.lesson-section-head{padding:10px 12px; font-size:16px; font-weight:650}
 .lesson-section-head.on{color:var(--accent)}
 .lesson-section-nav.open>.lesson-section-head{color:var(--accent)}
 .lesson-section-list{display:none; margin:4px 0 6px 6px; padding-left:10px; border-left:2px solid var(--line)}
@@ -157,47 +157,47 @@ body.side-hidden #side{display:none}
 .chronology-section-nav{margin-left:0}
 
 .toc-item{
-  padding:9px 10px; margin:1px 0; border-radius:8px; font-size:14px; line-height:1.5; color:var(--ink2);
+  padding:9px 10px; margin:1px 0; border-radius:8px; font-size:16px; line-height:1.5; color:var(--ink2);
   cursor:pointer; overflow-wrap:break-word;
 }
 .toc-item:hover{background:var(--row)}
-.toc-item.lv2{font-size:14px; color:var(--ink2)}
+.toc-item.lv2{font-size:16px; color:var(--ink2)}
 .toc-item.on{background:var(--accent-soft); color:var(--accent); font-weight:700}
-.tasting-year>.doc-group-head small{margin-left:6px; color:var(--sub); font-size:13px; font-weight:500}
+.tasting-year>.doc-group-head small{margin-left:6px; color:var(--sub); font-size:15px; font-weight:500}
 .tasting-item{display:flex; align-items:baseline; gap:10px; padding-left:12px}
-.tasting-item .note-season{flex:0 0 auto; min-width:26px; color:var(--sub); font-size:13px; font-weight:700}
+.tasting-item .note-season{flex:0 0 auto; min-width:26px; color:var(--sub); font-size:15px; font-weight:700}
 .tasting-item .t-label{flex:1; min-width:0; overflow-wrap:anywhere}
-.tasting-item .per100{flex:0 0 auto; margin-left:8px; color:var(--sub); font-size:13px; font-weight:600; font-variant-numeric:tabular-nums; white-space:nowrap}
+.tasting-item .per100{flex:0 0 auto; margin-left:8px; color:var(--sub); font-size:15px; font-weight:600; font-variant-numeric:tabular-nums; white-space:nowrap}
 .tasting-item.on .per100{color:var(--accent)}
-.per100-note{padding:0 4px 8px; color:var(--sub); font-size:12.5px}
+.per100-note{padding:0 4px 8px; color:var(--sub); font-size:14px}
 
 /* 목차 맨 아래: 글자 크기 */
 #sideFoot{order:3; flex:0 0 auto; display:flex; align-items:center; justify-content:space-between; gap:8px;
   padding:10px 14px calc(14px + env(safe-area-inset-bottom, 0px)); border-top:1px solid var(--line); background:var(--surface)}
-#sideFoot .sf-label{font-size:13px; color:var(--sub)}
+#sideFoot .sf-label{font-size:15px; color:var(--sub)}
 #sideFoot .text-size-options{padding:3px; border-radius:9px}
 #sideFoot .text-size-option{min-width:44px; height:34px; padding:0 8px; border-radius:7px}
-#sideFoot .text-size-option[data-size="small"]{font-size:15px}
-#sideFoot .text-size-option[data-size="medium"]{font-size:17px}
-#sideFoot .text-size-option[data-size="large"]{font-size:20px}
+#sideFoot .text-size-option[data-size="small"]{font-size:17px}
+#sideFoot .text-size-option[data-size="medium"]{font-size:19px}
+#sideFoot .text-size-option[data-size="large"]{font-size:23px}
 /* 검색 탭 */
 .search-panel{padding:6px 0 30px}
 .search-panel .searchbox{margin:4px 0 8px}
 .search-panel #searchnav{margin:0 0 6px}
 #searchResults{display:block; padding:0; overflow:visible}
 /* 검색 결과 */
-#reshead{font-size:13px; color:var(--sub); padding:10px 4px}
-.res-doc-label{font-size:13px; font-weight:700; color:var(--accent); padding:14px 4px 6px}
+#reshead{font-size:15px; color:var(--sub); padding:10px 4px}
+.res-doc-label{font-size:15px; font-weight:700; color:var(--accent); padding:14px 4px 6px}
 .res-doc-label span{color:var(--sub); font-weight:500}
-.res{padding:12px 8px; border-bottom:1px solid var(--line); cursor:pointer; font-size:14px}
+.res{padding:12px 8px; border-bottom:1px solid var(--line); cursor:pointer; font-size:16px}
 .res:hover{background:var(--row)}
 .res.cur{background:var(--accent-soft)}
 .res .rtop{display:flex; gap:8px; align-items:flex-start; margin-bottom:4px}
-.res .rnum{flex:0 0 auto; min-width:22px; color:var(--sub); font-size:12px; font-weight:700; font-variant-numeric:tabular-nums}
-.res .loc{flex:1; min-width:0; font-size:13px; color:var(--sub); line-height:1.5; overflow-wrap:anywhere}
+.res .rnum{flex:0 0 auto; min-width:22px; color:var(--sub); font-size:14px; font-weight:700; font-variant-numeric:tabular-nums}
+.res .loc{flex:1; min-width:0; font-size:15px; color:var(--sub); line-height:1.5; overflow-wrap:anywhere}
 .res .snip{color:var(--ink); line-height:1.6; overflow-wrap:break-word}
 .res .snip mark{font-weight:700}
-#empty{padding:36px 14px; text-align:center; color:var(--sub); font-size:14px}
+#empty{padding:36px 14px; text-align:center; color:var(--sub); font-size:16px}
 
 /* ---------- 본문 ---------- */
 .doc-title{font-size:1.47em; font-weight:800; line-height:1.3; letter-spacing:-.03em; margin:4px 0 6px; text-wrap:balance}
@@ -269,7 +269,7 @@ mark.cur{background:var(--hit-cur); box-shadow:0 0 0 1.5px var(--hit-ring)}
 #nav{position:fixed; right:22px; bottom:24px; z-index:10; display:flex; gap:10px}
 #nav button{
   width:42px; height:42px; border-radius:50%; border:1px solid var(--line); background:var(--surface);
-  color:var(--ink2); font-size:16px; cursor:pointer; box-shadow:0 2px 8px var(--shadow);
+  color:var(--ink2); font-size:18px; cursor:pointer; box-shadow:0 2px 8px var(--shadow);
 }
 #menu{display:none!important}
 #scrim{display:none; position:fixed; inset:0; background:var(--scrim); z-index:19}
@@ -303,12 +303,12 @@ button:focus-visible,input:focus-visible,.doc-group-head:focus-visible,.toc-item
   #scrim{top:var(--hdr-top); bottom:0}
   #sideHead{
     order:0; display:flex; align-items:center; gap:8px; flex:0 0 auto;
-    padding:12px 16px; background:var(--accent); color:#fff; font-size:15px; font-weight:700;
+    padding:12px 16px; background:var(--accent); color:#fff; font-size:17px; font-weight:700;
   }
   #sideHead .sh-scope{font-weight:500; opacity:.85}
-  #sideHead button{margin-left:auto; border:0; background:transparent; color:#fff; font-size:14px; font-weight:700; padding:4px 6px; cursor:pointer}
+  #sideHead button{margin-left:auto; border:0; background:transparent; color:#fff; font-size:16px; font-weight:700; padding:4px 6px; cursor:pointer}
   #side{border-top:0}
-  #side .doc-group-head,#side .lesson-section-head{font-size:14px}
+  #side .doc-group-head,#side .lesson-section-head{font-size:16px}
   .toc-toolbar{display:flex; flex-direction:column}
   .toc-actions{justify-content:flex-end; align-items:center; padding-top:6px}
   #side.searching #searchbar,#side.searching .toc-toolbar{display:none!important}
@@ -348,9 +348,9 @@ button:focus-visible,input:focus-visible,.doc-group-head:focus-visible,.toc-item
 #homeSearch{margin-top:14px}
 #homeSearch .searchbox{margin:0 0 10px}
 #homeSearch #searchnav{margin:0 0 6px}
-.home-h{font-size:15px; font-weight:700; color:var(--ink); margin:26px 0 4px}
-.home-links button{display:flex; justify-content:space-between; align-items:center; gap:10px; width:100%; padding:13px 8px; border:0; border-bottom:1px solid var(--line); background:none; color:var(--ink); font:inherit; font-size:15px; font-weight:700; text-align:left; cursor:pointer}
-.home-links button span{flex:0 0 auto; font-size:13px; font-weight:500; color:var(--sub)}
+.home-h{font-size:17px; font-weight:700; color:var(--ink); margin:26px 0 4px}
+.home-links button{display:flex; justify-content:space-between; align-items:center; gap:10px; width:100%; padding:13px 8px; border:0; border-bottom:1px solid var(--line); background:none; color:var(--ink); font:inherit; font-size:17px; font-weight:700; text-align:left; cursor:pointer}
+.home-links button span{flex:0 0 auto; font-size:15px; font-weight:500; color:var(--sub)}
 .home-links button.home-t{flex-direction:column; align-items:flex-start; gap:2px}
 .home-links button.home-t b{font-weight:700}
 .home-links button.home-last{font-weight:500; color:var(--accent)}
@@ -368,10 +368,10 @@ button:focus-visible,input:focus-visible,.doc-group-head:focus-visible,.toc-item
 .tasting-facts .fp-rec{margin-left:0; font-size:.87em; font-weight:500; color:var(--sub); white-space:nowrap}
 
 .home-card{background:var(--surface); border:1px solid var(--line); border-radius:12px; overflow:hidden}
-.home-card button{display:flex; flex-direction:column; align-items:flex-start; gap:3px; width:100%; padding:13px 16px; border:0; border-top:1px solid var(--line); background:none; color:var(--ink); font:inherit; font-size:14px; text-align:left; cursor:pointer}
+.home-card button{display:flex; flex-direction:column; align-items:flex-start; gap:3px; width:100%; padding:13px 16px; border:0; border-top:1px solid var(--line); background:none; color:var(--ink); font:inherit; font-size:16px; text-align:left; cursor:pointer}
 .home-card button:first-child{border-top:0}
 .home-card button b{font-weight:400; line-height:1.5}
-.home-card button span{font-size:13px; color:var(--sub)}
+.home-card button span{font-size:15px; color:var(--sub)}
 .home-card button:hover{background:var(--row)}
 
 /* 휴대폰 목차 서랍의 머리 띠는 쓰지 않는다 (닫기는 목차 버튼·바깥 누르기) */
@@ -380,7 +380,7 @@ button:focus-visible,input:focus-visible,.doc-group-head:focus-visible,.toc-item
 /* 휴대폰: 목차 버튼은 왼쪽 아래 동그란 버튼 (오른쪽 아래 홈·뒤로·맨위로와 짝) */
 @media (max-width:620px){
   #tocToggle{position:fixed; left:16px; bottom:calc(14px + env(safe-area-inset-bottom, 0px)); z-index:10; width:42px; height:42px; padding:0; gap:0; justify-content:center;
-    border-radius:50%; color:var(--ink2); font-size:17px; box-shadow:0 2px 8px var(--shadow)}
+    border-radius:50%; color:var(--ink2); font-size:19px; box-shadow:0 2px 8px var(--shadow)}
   #tocToggle .tt-label{display:none}
 }
 
@@ -393,26 +393,26 @@ button:focus-visible,input:focus-visible,.doc-group-head:focus-visible,.toc-item
 #homeSearch{margin-top:20px}
 #homeSearch .searchbox{margin:0 0 12px}
 #homeSearch .searchbox svg{left:17px; width:18px; height:18px; color:var(--accent)}
-#homeSearch #q{min-height:54px; padding:14px 16px 14px 46px; font-size:16px; border-radius:14px; border:1.5px solid var(--line); box-shadow:0 4px 18px var(--shadow)}
+#homeSearch #q{min-height:54px; padding:14px 16px 14px 46px; font-size:18px; border-radius:14px; border:1.5px solid var(--line); box-shadow:0 4px 18px var(--shadow)}
 #homeSearch #q:focus{border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft), 0 4px 18px var(--shadow)}
 #homeBody{margin-top:30px}
-.home-h{font-size:12.5px; font-weight:600; color:var(--sub); margin:22px 2px 7px; letter-spacing:.02em}
+.home-h{font-size:14px; font-weight:600; color:var(--sub); margin:22px 2px 7px; letter-spacing:.02em}
 #homeBody .home-h:first-child{margin-top:0}
 .home-card{border:0; background:var(--surface); box-shadow:0 1px 3px var(--shadow)}
-.home-card button{padding:11px 15px; font-size:14px; gap:2px}
-.home-card button span{font-size:12.5px}
+.home-card button{padding:11px 15px; font-size:16px; gap:2px}
+.home-card button span{font-size:14px}
 
 /* ---------- 홈과 목록: 장식 없이 글자·선·여백으로만 구분 ---------- */
 #inner[data-doc="home"]{padding-top:36px}
 .home-hero{display:flex; align-items:center; justify-content:center; padding:0 0 22px; border-bottom:1px solid var(--line); text-align:center}
 .hh-copy{min-width:0}
 .hh-orn{display:none}
-.hh-title{font-family:var(--font); font-weight:800; font-size:22px; line-height:1.35; letter-spacing:-.03em; color:var(--ink); margin:0 0 5px}
-.hh-sub{font-family:var(--font); font-weight:400; font-size:14px; letter-spacing:-.01em; color:var(--sub)}
+.hh-title{font-family:var(--font); font-weight:800; font-size:25px; line-height:1.35; letter-spacing:-.03em; color:var(--ink); margin:0 0 5px}
+.hh-sub{font-family:var(--font); font-weight:400; font-size:16px; letter-spacing:-.01em; color:var(--sub)}
 #homeSearch{margin-top:22px}
-#homeSearch #q{font-size:15px; min-height:50px; border-radius:10px; box-shadow:none}
+#homeSearch #q{font-size:17px; min-height:50px; border-radius:10px; box-shadow:none}
 #homeSearch #q:focus{box-shadow:0 0 0 3px var(--accent-soft)}
-.home-h{font-family:var(--font); font-size:13px; font-weight:700; color:var(--ink2); letter-spacing:0}
+.home-h{font-family:var(--font); font-size:15px; font-weight:700; color:var(--ink2); letter-spacing:0}
 .home-card{border:1px solid var(--line); border-radius:10px; box-shadow:none}
 .home-card button{padding:12px 14px}
 .doc-group-head,.chronology-section-nav>.lesson-section-head{font-family:var(--font); font-weight:700; letter-spacing:-.01em}
@@ -429,7 +429,7 @@ button:focus-visible,input:focus-visible,.doc-group-head:focus-visible,.toc-item
    2단(수업노트의 1 & 2강): 고딕 14px 굵게
    마지막 단(소제목 · 차 이름 · 연대기 연도): 고딕 14px 보통, 같은 색 */
 .chronology-section-nav{margin:0 0 8px 0}
-.chronology-section-nav>.lesson-section-head{padding:12px 14px; font-size:15px}
+.chronology-section-nav>.lesson-section-head{padding:12px 14px; font-size:17px}
 .tasting-item .note-season{font-weight:500}
 .tasting-item .per100{font-weight:500}
 .toc-item,.tasting-item .t-label{color:var(--ink2); font-weight:400}
@@ -438,15 +438,15 @@ button:focus-visible,input:focus-visible,.doc-group-head:focus-visible,.toc-item
 
 /* ---------- 검색 결과: 강·대제목별로 묶고, 찾은 문장을 통째로 보여 준다 ---------- */
 #homeSearch #searchnav{display:none!important}
-.sr-head{margin:16px 2px 0; font-size:13px; color:var(--sub)}
+.sr-head{margin:16px 2px 0; font-size:15px; color:var(--sub)}
 .sr-head b{color:var(--ink); font-weight:700}
 .sr-coll{margin-top:20px}
-.sr-coll-h{display:flex; justify-content:space-between; align-items:baseline; margin:0 2px 8px; font-size:13px; font-weight:700; color:var(--ink2)}
+.sr-coll-h{display:flex; justify-content:space-between; align-items:baseline; margin:0 2px 8px; font-size:15px; font-weight:700; color:var(--ink2)}
 .sr-coll-h span{font-weight:500; color:var(--sub); font-variant-numeric:tabular-nums}
 .sr-doc{margin-bottom:10px}
-.sr-doc-h{display:flex; align-items:center; gap:10px; width:100%; padding:12px 14px; border:0; border-radius:10px; background:var(--row); color:var(--ink); font:inherit; font-size:15px; font-weight:700; line-height:1.5; text-align:left; cursor:pointer}
+.sr-doc-h{display:flex; align-items:center; gap:10px; width:100%; padding:12px 14px; border:0; border-radius:10px; background:var(--row); color:var(--ink); font:inherit; font-size:17px; font-weight:700; line-height:1.5; text-align:left; cursor:pointer}
 .sr-doc-h:hover{background:var(--row-hover)}
-.sr-doc-h .sr-n{margin-left:auto; font-size:13px; font-weight:500; color:var(--sub); font-variant-numeric:tabular-nums}
+.sr-doc-h .sr-n{margin-left:auto; font-size:15px; font-weight:500; color:var(--sub); font-variant-numeric:tabular-nums}
 .sr-doc-h .dgh-arrow{transform:rotate(180deg); color:var(--accent)}
 .sr-doc.closed .sr-doc-h .dgh-arrow{transform:none; color:var(--sub)}
 .sr-doc.closed .sr-list{display:none}
@@ -454,46 +454,46 @@ button:focus-visible,input:focus-visible,.doc-group-head:focus-visible,.toc-item
 .sr-doc .sr-list{margin-top:6px}
 .sr-sec{padding:12px 14px 14px; border-top:1px solid var(--line)}
 .sr-sec:first-child{border-top:0}
-.sr-sec-t{display:block; width:100%; padding:0; border:0; background:none; color:var(--sub); font:inherit; font-size:13px; font-weight:600; line-height:1.55; text-align:left; cursor:pointer}
+.sr-sec-t{display:block; width:100%; padding:0; border:0; background:none; color:var(--sub); font:inherit; font-size:15px; font-weight:600; line-height:1.55; text-align:left; cursor:pointer}
 .sr-sec-t:hover,.sr-sec-t.cur{color:var(--accent)}
 .sr-sep{margin:0 5px; color:var(--line)}
-.sr-hit{display:block; width:100%; margin-top:8px; padding:3px 6px 3px 10px; border:0; border-left:2px solid var(--line); border-radius:0 6px 6px 0; background:none; color:var(--ink); font:inherit; font-size:14px; line-height:1.65; text-align:left; cursor:pointer; overflow-wrap:anywhere}
+.sr-hit{display:block; width:100%; margin-top:8px; padding:3px 6px 3px 10px; border:0; border-left:2px solid var(--line); border-radius:0 6px 6px 0; background:none; color:var(--ink); font:inherit; font-size:16px; line-height:1.65; text-align:left; cursor:pointer; overflow-wrap:anywhere}
 .sr-hit:hover{border-left-color:var(--accent)}
 .sr-hit.cur{border-left-color:var(--accent); background:var(--accent-soft)}
 .sr-hit-h{font-weight:600}
-.sr-k{font-size:13px; color:var(--sub)}
-.sr-more{display:block; margin:8px 0 0 12px; padding:2px 0; border:0; background:none; color:var(--accent); font:inherit; font-size:13px; font-weight:700; cursor:pointer}
-.sr-t{display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:2px 12px; width:100%; padding:12px 14px; border:0; border-top:1px solid var(--line); background:none; color:var(--ink); font:inherit; font-size:14px; line-height:1.55; text-align:left; cursor:pointer}
+.sr-k{font-size:15px; color:var(--sub)}
+.sr-more{display:block; margin:8px 0 0 12px; padding:2px 0; border:0; background:none; color:var(--accent); font:inherit; font-size:15px; font-weight:700; cursor:pointer}
+.sr-t{display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:2px 12px; width:100%; padding:12px 14px; border:0; border-top:1px solid var(--line); background:none; color:var(--ink); font:inherit; font-size:16px; line-height:1.55; text-align:left; cursor:pointer}
 .sr-t:first-child{border-top:0}
 .sr-t:hover{background:var(--row)}
 .sr-t.cur{background:var(--accent-soft)}
 .sr-t-name{font-weight:600}
-.sr-t-meta{font-size:13px; color:var(--sub); white-space:nowrap}
+.sr-t-meta{font-size:15px; color:var(--sub); white-space:nowrap}
 .sr-t-year{margin-right:7px; font-variant-numeric:tabular-nums}
 /* 검색 결과 탭: 목차 탭과 같은 모양, 화면을 내려도 위에 붙어 있다 */
 .sr-tabbar{position:sticky; top:var(--hdr-h); z-index:4; margin-top:12px; padding:6px 0 8px; background:var(--bg)}
 .sr-tabs{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:3px; padding:3px; border:1px solid var(--line); border-radius:10px; background:var(--surface)}
-.sr-tab{display:flex; align-items:center; justify-content:center; gap:6px; min-height:40px; padding:0 4px; border:0; border-radius:8px; background:transparent; color:var(--sub); font:inherit; font-size:14px; font-weight:700; white-space:nowrap; cursor:pointer}
+.sr-tab{display:flex; align-items:center; justify-content:center; gap:6px; min-height:40px; padding:0 4px; border:0; border-radius:8px; background:transparent; color:var(--sub); font:inherit; font-size:16px; font-weight:700; white-space:nowrap; cursor:pointer}
 .sr-tab[aria-selected="true"]{background:var(--accent-soft); color:var(--accent)}
-.sr-tab-n{font-size:12.5px; font-weight:500; font-variant-numeric:tabular-nums}
+.sr-tab-n{font-size:14px; font-weight:500; font-variant-numeric:tabular-nums}
 .sr-tab:disabled{opacity:.4; cursor:default}
 .sr-coll[data-tab]{margin-top:6px}
 .sr-coll[hidden]{display:none}
 /* 결과가 아주 많을 때(예: '차' 한 글자) 화면 밖 항목은 그리지 않고 넘겨서 휴대폰에서도 바로 뜨게 한다 */
 .sr-sec{content-visibility:auto; contain-intrinsic-size:auto 160px}
 /* 글자 크기 설정을 검색 결과·홈 목록·목차에도 적용한다(기본에서는 지금 크기 그대로, 누르면 바로 커짐) */
-#searchResults .sr-hit,#searchResults .sr-t{font-size:calc(14px * var(--ts))}
-#searchResults .sr-doc-h{font-size:calc(15px * var(--ts))}
-#searchResults .sr-sec-t,#searchResults .sr-k,#searchResults .sr-more,#searchResults .sr-t-meta,#searchResults .sr-doc-h .sr-n{font-size:calc(13px * var(--ts))}
-#homeBody .home-h{font-size:calc(13px * var(--ts))}
-.home-card button{font-size:calc(14px * var(--ts))}
-.home-card button span{font-size:calc(12.5px * var(--ts))}
-.doc-group-head{font-size:calc(15px * var(--ts))}
-.lesson-section-head{font-size:calc(14px * var(--ts))}
-.chronology-section-nav>.lesson-section-head{font-size:calc(15px * var(--ts))}
-.toc-item,.toc-item.lv2{font-size:calc(14px * var(--ts))}
-.tasting-year>.doc-group-head small,.tasting-item .note-season,.tasting-item .per100{font-size:calc(13px * var(--ts))}
-@media (max-width:620px){ #side .doc-group-head,#side .lesson-section-head{font-size:calc(14px * var(--ts))} }
+#searchResults .sr-hit,#searchResults .sr-t{font-size:calc(16px * var(--ts))}
+#searchResults .sr-doc-h{font-size:calc(17px * var(--ts))}
+#searchResults .sr-sec-t,#searchResults .sr-k,#searchResults .sr-more,#searchResults .sr-t-meta,#searchResults .sr-doc-h .sr-n{font-size:calc(15px * var(--ts))}
+#homeBody .home-h{font-size:calc(15px * var(--ts))}
+.home-card button{font-size:calc(16px * var(--ts))}
+.home-card button span{font-size:calc(14px * var(--ts))}
+.doc-group-head{font-size:calc(17px * var(--ts))}
+.lesson-section-head{font-size:calc(16px * var(--ts))}
+.chronology-section-nav>.lesson-section-head{font-size:calc(17px * var(--ts))}
+.toc-item,.toc-item.lv2{font-size:calc(16px * var(--ts))}
+.tasting-year>.doc-group-head small,.tasting-item .note-season,.tasting-item .per100{font-size:calc(15px * var(--ts))}
+@media (max-width:620px){ #side .doc-group-head,#side .lesson-section-head{font-size:calc(16px * var(--ts))} }
 #searchResults mark{font-weight:700}
 
 /* ---------- 상단 경로 바(#crumb) 제거: 바는 숨기고 목차 버튼만 따로 둔다 ---------- */
