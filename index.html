@@ -7,8 +7,8 @@
    레이아웃: 데스크톱은 왼쪽 목차 + 가운데 본문(최대 560px), 휴대폰은 목차 서랍 */
 :root{
   color-scheme:light dark;
-  --bg:#F7F7F8; --surface:#FFFFFF; --row:#F0F1F2; --row-hover:#E7E9EB; --line:#D8DADD;
-  --ink:#202225; --ink2:#3F4348; --sub:#70757C;
+  --bg:#F7F5F2; --surface:#FFFEFC; --row:#EFEBE6; --row-hover:#E6E1DA; --line:#DCD6CF;
+  --ink:#262224; --ink2:#45403F; --sub:#76706C;
   --accent:#A44763; --accent-soft:#F7E8ED;
   --hit:#FDE68A; --hit-cur:#FBBF24; --hit-ring:transparent; --shadow:rgba(22,25,29,.10); --scrim:rgba(20,23,27,.34);
   --font:"Pretendard","Pretendard Variable","Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
@@ -17,16 +17,16 @@
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#111315; --surface:#191C1F; --row:#24282C; --row-hover:#2D3237; --line:#343A40;
-    --ink:#F0F1F2; --ink2:#D3D6DA; --sub:#9DA4AC;
+    --bg:#141211; --surface:#1C1A19; --row:#272422; --row-hover:#302C2A; --line:#3A3532;
+    --ink:#F2EFEC; --ink2:#D8D2CD; --sub:#A39A93;
     --accent:#E08AA4; --accent-soft:#3A232D;
     --hit:#6B5A1E; --hit-cur:#8F6F10; --hit-ring:var(--accent); --shadow:rgba(0,0,0,.38); --scrim:rgba(0,0,0,.54);
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#111315; --surface:#191C1F; --row:#24282C; --row-hover:#2D3237; --line:#343A40;
-  --ink:#F0F1F2; --ink2:#D3D6DA; --sub:#9DA4AC;
+  --bg:#141211; --surface:#1C1A19; --row:#272422; --row-hover:#302C2A; --line:#3A3532;
+  --ink:#F2EFEC; --ink2:#D8D2CD; --sub:#A39A93;
   --accent:#E08AA4; --accent-soft:#3A232D;
   --hit:#6B5A1E; --hit-cur:#8F6F10; --hit-ring:var(--accent); --shadow:rgba(0,0,0,.38); --scrim:rgba(0,0,0,.54);
   color-scheme:dark;
