@@ -554,6 +554,13 @@ html[data-text-size="large"] .home-go{grid-template-columns:1fr}
 .lesson-section-head.on,.lesson-section-nav.open>.lesson-section-head{color:var(--ink)}
 #side .doc-group.open>.doc-group-head,#side .chronology-section-nav.open>.lesson-section-head{border-bottom-color:var(--ink)}
 .dgh-arrow,.doc-group.open>.doc-group-head .dgh-arrow,.lesson-section-nav.open>.lesson-section-head .dgh-arrow,.lesson-toggle-arrow{color:var(--sub)}
+/* ---------- 탭·글자 크기 버튼: 회색 판 위에 고른 칸만 흰 칸 + 진한 글자(강조색은 쓰지 않는다).
+   '전체 펼치기'는 조용한 회색 글자 버튼 ---------- */
+.toc-tabs,.sr-tabs,.text-size-options{border:0; background:var(--row)}
+.toc-tab,.sr-tab,.text-size-option{color:var(--sub)}
+.toc-tab[aria-selected="true"],.sr-tab[aria-selected="true"],.text-size-option[aria-pressed="true"]{background:var(--surface); color:var(--ink); box-shadow:0 1px 3px var(--shadow)}
+.toc-expand-all{color:var(--sub); font-weight:400}
+@media (hover:hover){ .toc-expand-all:hover,.toc-tab:hover,.sr-tab:not(:disabled):hover{color:var(--ink)} }
 </style>
 
 <div id="wrap">
