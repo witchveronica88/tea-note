@@ -529,6 +529,23 @@ html[data-text-size="large"] .home-go{grid-template-columns:1fr}
 #nav button:disabled{opacity:.4}
 #tocToggle{color:var(--ink2)}
 @media (min-width:621px){ #tocToggle{height:42px; padding:0 16px 0 13px; border-radius:21px} }
+/* ---------- 목차: 책 차례처럼 (Part 밑줄 · 강 점선 · 소제목 앞 점) ---------- */
+#side .doc-group{margin:0 0 18px}
+#side .doc-group-head,#side .chronology-section-nav>.lesson-section-head{background:none; padding:6px 4px 8px; border-radius:0; border-bottom:2px solid var(--ink); font-weight:800; letter-spacing:-.02em}
+#side .doc-group.open>.doc-group-head,#side .chronology-section-nav.open>.lesson-section-head{border-bottom-color:var(--accent)}
+#side .doc-group-head:hover,#side .chronology-section-nav>.lesson-section-head:hover{background:none; color:var(--accent)}
+#side .doc-group-list{padding:4px 0 0}
+#side .lesson-section-nav{margin:0}
+#side .chronology-section-nav{margin:0 0 18px}
+#side .lesson-section-head{background:none; border-radius:0; padding:10px 4px; border-bottom:1px dotted var(--line); font-weight:700}
+#side .lesson-section-head:hover{background:none; color:var(--accent)}
+#side .lesson-section-list{margin:4px 0 8px 0; padding-left:14px; border-left:0}
+#side .chronology-section-nav>.lesson-section-list{padding-left:4px}
+#side .toc-item{position:relative; padding:6px 8px 6px 14px; border-radius:0; color:var(--ink2)}
+#side .toc-item::before{content:""; position:absolute; left:2px; top:calc(6px + .8em); width:4px; height:4px; border-radius:50%; background:var(--line)}
+#side .toc-item:hover{background:none; color:var(--ink)}
+#side .toc-item.on{background:none; color:var(--accent)}
+#side .toc-item.on::before{background:var(--accent)}
 </style>
 
 <div id="wrap">
