@@ -57,11 +57,11 @@ i{font-style:italic}
 #main{flex:1; min-width:0; position:relative; min-height:100%}
 /* 글자 크기 토큰 4단계(--fs-xl 24 · --fs-l 18 · --fs-m 16 · --fs-s 14). font-size에는 이 토큰만 쓴다.
    읽기 글자 크기 3단계: 기본 16px → 조금 크게 18px → 크게 24px
-   --rs는 읽기 본문 배율(1 · 1.125 · 1.5), --ts는 목차·홈 목록·검색 결과 배율(1 · 1.14 · 1.29).
+   --rs는 읽기 본문 배율(1 · 1.125 · 1.5), --ts는 목차·홈 목록·검색 결과 배율(본문과 같은 1 · 1.125 · 1.5).
    배율이 필요한 곳은 calc(var(--fs-m) * var(--rs))처럼 토큰에 곱한다 */
 html{--fs-xl:24px; --fs-l:18px; --fs-m:16px; --fs-s:14px; --ts:1; --rs:1}
-html[data-text-size="medium"]{--ts:1.14; --rs:1.125}
-html[data-text-size="large"]{--ts:1.29; --rs:1.5}
+html[data-text-size="medium"]{--ts:1.125; --rs:1.125}
+html[data-text-size="large"]{--ts:1.5; --rs:1.5}
 #inner{max-width:560px; margin:0 auto; padding:28px 24px 160px; font-size:calc(var(--fs-m) * var(--rs)); --fs:calc(var(--fs-m) * var(--rs))}
 
 /* ---------- 상단 머리줄(현재 위치) ---------- */
@@ -491,12 +491,12 @@ button:focus-visible,input:focus-visible,.doc-group-head:focus-visible,.toc-item
 #homeBody .home-h{font-size:calc(var(--fs-s) * var(--ts))}
 .home-card button{font-size:calc(var(--fs-m) * var(--ts))}
 .home-card button span{font-size:calc(var(--fs-s) * var(--ts))}
-.doc-group-head{font-size:calc(var(--fs-m) * var(--ts))}
+.doc-group-head{font-size:calc(var(--fs-l) * var(--ts))}
 .lesson-section-head{font-size:calc(var(--fs-m) * var(--ts))}
-.chronology-section-nav>.lesson-section-head{font-size:calc(var(--fs-m) * var(--ts))}
+.chronology-section-nav>.lesson-section-head{font-size:calc(var(--fs-l) * var(--ts))}
 .toc-item,.toc-item.lv2{font-size:calc(var(--fs-m) * var(--ts))}
 .tasting-year>.doc-group-head small,.tasting-item .note-season,.tasting-item .per100{font-size:calc(var(--fs-s) * var(--ts))}
-@media (max-width:620px){ #side .doc-group-head,#side .lesson-section-head{font-size:calc(var(--fs-m) * var(--ts))} }
+@media (max-width:620px){ #side .doc-group-head,#side .chronology-section-nav>.lesson-section-head{font-size:calc(var(--fs-l) * var(--ts))} #side .lesson-section-nav:not(.chronology-section-nav)>.lesson-section-head{font-size:calc(var(--fs-m) * var(--ts))} }
 #searchResults mark{font-weight:700}
 
 /* ---------- 상단 경로 바(#crumb) 제거: 바는 숨기고 목차 버튼만 따로 둔다 ---------- */
@@ -510,6 +510,25 @@ button:focus-visible,input:focus-visible,.doc-group-head:focus-visible,.toc-item
   body.side-hidden #tocToggle{left:22px}
 }
 
+/* ---------- 목차를 본문과 같은 결로: 진한 글자, 넉넉한 줄 간격 ---------- */
+.toc-item{line-height:1.6}
+.toc-item,.tasting-item .t-label{color:var(--ink)}
+
+/* ---------- 홈: 모음으로 바로 가기 ---------- */
+.home-go{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin:0 0 4px}
+html[data-text-size="large"] .home-go{grid-template-columns:1fr}
+.home-go button{display:flex; flex-direction:column; align-items:flex-start; gap:2px; min-width:0; padding:14px 12px; border:1px solid var(--line); border-radius:10px; background:var(--surface); color:var(--ink); font:inherit; font-size:calc(var(--fs-m) * var(--ts)); font-weight:700; line-height:1.4; text-align:left; cursor:pointer}
+.home-go button span{font-size:calc(var(--fs-s) * var(--ts)); font-weight:500; color:var(--sub)}
+.home-go button:hover{background:var(--row)}
+
+/* ---------- 빈 기록 안내 ---------- */
+.empty-note{margin:12px 0; padding:18px 16px; border:1px dashed var(--line); border-radius:10px; color:var(--sub); font-size:calc(var(--fs-m) * var(--rs)); text-align:center}
+
+/* ---------- 떠 있는 버튼: 같은 모양의 아이콘 ---------- */
+#nav button,#tocToggle{display:inline-flex; align-items:center; justify-content:center}
+#nav button:disabled{opacity:.4}
+#tocToggle{color:var(--ink2)}
+@media (min-width:621px){ #tocToggle{height:42px; padding:0 16px 0 13px; border-radius:21px} }
 </style>
 
 <div id="wrap">
@@ -542,7 +561,7 @@ button:focus-visible,input:focus-visible,.doc-group-head:focus-visible,.toc-item
 </div>
 <div id="scrim"></div>
 <div id="nav">
-  <button id="top" type="button" aria-label="맨 위로" title="맨 위로">&#8679;</button>
+  <button id="top" type="button" aria-label="맨 위로" title="맨 위로"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M6 11l6-6 6 6"/></svg></button>
 </div>
 <button id="menu" type="button" aria-label="목차 열기"><span class="ico" aria-hidden="true">&#9776;</span>목차</button>
 
@@ -984,6 +1003,7 @@ function render(docId, scrollMode){
     const ic = b.ind>=56?'i3':b.ind>=40?'i2':b.ind>=20?'i1':'';
     h += '<p class="b '+ic+' '+(b.bul?'bul':'')+'"'+id+'>'+b.html+'</p>';
   });
+  if(doc.kind==='tasting' && !doc.blocks.some(b=>b.k!=='h1') && !(doc.images && doc.images.length)) h += '<p class="empty-note">아직 적어 둔 테이스팅 기록이 없어요.</p>';
   if(openH2) h += '</div>';
   if(openH1) h += '</div>';
 
@@ -1461,7 +1481,10 @@ render(DATA[0].id,true);
     try{ viewerStorage.setItem('teaNote.recent', JSON.stringify(list)); }catch(x){}
   }
   function homeBody(){
-    let h='';
+    let h='<div class="home-go">'
+      +'<button type="button" data-go="lessons">수업노트<span>'+LESSON_DATA.length+'편</span></button>'
+      +'<button type="button" data-go="tasting">시음노트<span>'+TASTING_DATA.length+'개</span></button>'
+      +'<button type="button" data-go="chronology">연대기<span>시대별 연표</span></button></div>';
     const rec=readRecent();
     if(rec.length){
       h+='<div class="home-h">최근 수업노트</div><div class="home-card">';
@@ -1804,7 +1827,7 @@ render(DATA[0].id,true);
 
   // 머리줄의 목차 버튼: 데스크톱은 목차를 숨기거나 보이고, 휴대폰은 왼쪽에서 꺼낸다
   const tbtn=document.createElement('button');
-  tbtn.id='tocToggle'; tbtn.type='button'; tbtn.setAttribute('aria-label','목차'); tbtn.title='목차'; tbtn.innerHTML='<span aria-hidden="true">&#9776;</span><span class="tt-label">목차</span>';
+  tbtn.id='tocToggle'; tbtn.type='button'; tbtn.setAttribute('aria-label','목차'); tbtn.title='목차'; tbtn.innerHTML='<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg><span class="tt-label">목차</span>';
   document.body.appendChild(tbtn);
   function setHidden(hid){
     document.body.classList.toggle('side-hidden', hid);
@@ -1853,7 +1876,7 @@ render(DATA[0].id,true);
   }
   const bbtn=document.createElement('button');
   bbtn.id='backBtn'; bbtn.type='button'; bbtn.disabled=true; bbtn.setAttribute('aria-label','뒤로');
-  bbtn.title='뒤로'; bbtn.innerHTML='&#8678;';
+  bbtn.title='뒤로'; bbtn.innerHTML='<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg>';
   const hbtn=document.createElement('button');
   hbtn.id='homeBtn'; hbtn.type='button'; hbtn.setAttribute('aria-label','홈');
   hbtn.title='홈'; hbtn.innerHTML='<svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>';
