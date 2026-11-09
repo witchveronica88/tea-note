@@ -450,7 +450,7 @@ button:focus-visible,input:focus-visible,.doc-group-head:focus-visible,.toc-item
 .sr-doc-h{display:flex; align-items:center; gap:10px; width:100%; padding:12px 14px; border:0; border-radius:10px; background:var(--row); color:var(--ink); font:inherit; font-size:var(--fs-l); font-weight:700; line-height:1.5; text-align:left; cursor:pointer}
 .sr-doc-h:hover{background:var(--row-hover)}
 .sr-doc-h .sr-n{margin-left:auto; font-size:var(--fs-s); font-weight:400; color:var(--sub); font-variant-numeric:tabular-nums}
-.sr-doc-h .dgh-arrow{transform:rotate(180deg); color:var(--accent)}
+.sr-doc-h .dgh-arrow{transform:rotate(180deg); color:var(--sub)}
 .sr-doc.closed .sr-doc-h .dgh-arrow{transform:none; color:var(--sub)}
 .sr-doc.closed .sr-list{display:none}
 .sr-list{background:var(--surface); border:1px solid var(--line); border-radius:10px; overflow:hidden}
@@ -514,13 +514,6 @@ button:focus-visible,input:focus-visible,.doc-group-head:focus-visible,.toc-item
 .toc-item{line-height:1.6}
 .toc-item,.tasting-item .t-label{color:var(--ink)}
 
-/* ---------- 홈: 모음으로 바로 가기 ---------- */
-.home-go{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin:0 0 4px}
-html[data-text-size="large"] .home-go{grid-template-columns:1fr}
-.home-go button{display:flex; flex-direction:column; align-items:flex-start; gap:2px; min-width:0; padding:14px 12px; border:1px solid var(--line); border-radius:10px; background:var(--surface); color:var(--ink); font:inherit; font-size:calc(var(--fs-m) * var(--ts)); font-weight:700; line-height:1.4; text-align:left; cursor:pointer}
-.home-go button span{font-size:calc(var(--fs-s) * var(--ts)); font-weight:400; color:var(--sub)}
-.home-go button:hover{background:var(--row)}
-
 /* ---------- 빈 기록 안내 ---------- */
 .empty-note{margin:12px 0; padding:18px 16px; border:1px dashed var(--line); border-radius:10px; color:var(--sub); font-size:calc(var(--fs-m) * var(--rs)); text-align:center}
 
@@ -565,12 +558,9 @@ html[data-text-size="large"] .home-go{grid-template-columns:1fr}
 /* ---------- 기물노트: 목차는 흙별 묶음 + 작은 사진 목록, 본문은 사진 먼저 ---------- */
 .toc-tabs,.sr-tabs{grid-template-columns:repeat(4,minmax(0,1fr))}
 .toc-tab{padding:0 1px}
-.home-go{grid-template-columns:repeat(4,minmax(0,1fr))}
 @media (max-width:620px){
   .sr-tab{flex-direction:column; gap:0; min-height:46px; line-height:1.3}
-  .home-go{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-html[data-text-size="large"] .home-go{grid-template-columns:1fr}
 .gimul-kinds{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:3px; margin:0 0 14px; padding:3px; border-radius:10px; background:var(--row)}
 .gimul-kind{min-height:36px; padding:0 2px; border:0; border-radius:8px; background:transparent; color:var(--sub); font:inherit; font-size:var(--fs-s); font-weight:700; cursor:pointer}
 .gimul-kind[aria-pressed="true"]{background:var(--surface); color:var(--ink); box-shadow:0 1px 3px var(--shadow)}
@@ -614,6 +604,27 @@ html[data-text-size="large"] .home-go{grid-template-columns:1fr}
   #nav{bottom:calc(var(--bar-h) + 12px + env(safe-area-inset-bottom, 0px)); transition:bottom .2s}
   body.bar-hidden #nav,body.kb-open #nav{bottom:calc(14px + env(safe-area-inset-bottom, 0px))}
 }
+/* ---------- 홈: 찻잔 머리 → 큰 검색창 → 이어서 읽기 · 오늘의 기물 · 최근 시음노트 ---------- */
+.home-hero{display:block; padding:6px 0 0; border-bottom:0}
+.hh-mark{display:flex; align-items:center; justify-content:center; width:64px; height:64px; margin:0 auto 14px; border-radius:50%; background:var(--row); color:var(--ink)}
+.hh-title{margin:0 0 4px}
+.hh-sub{font-size:var(--fs-s)}
+#homeSearch{margin-top:26px}
+#homeSearch .searchbox{margin:0 0 6px}
+#homeSearch .searchbox svg{left:18px; width:20px; height:20px; color:var(--ink)}
+#homeSearch #q{min-height:58px; padding:16px 18px 16px 50px; font-size:var(--fs-m); border:2px solid var(--ink); border-radius:16px; background:var(--surface); box-shadow:0 6px 20px var(--shadow)}
+#homeSearch #q:focus{border-color:var(--ink); box-shadow:0 0 0 4px var(--row), 0 6px 20px var(--shadow)}
+#homeBody{margin-top:34px}
+.home-gimul{display:flex; align-items:center; gap:16px; width:100%; padding:12px; border:1px solid var(--line); border-radius:10px; background:var(--surface); color:var(--ink); font:inherit; text-align:left; cursor:pointer}
+.home-gimul img{flex:0 0 auto; width:84px; height:112px; border-radius:8px; object-fit:cover; background:var(--row)}
+.hg-text{display:flex; flex-direction:column; gap:4px; min-width:0}
+.hg-text b{font-size:calc(var(--fs-m) * var(--ts)); font-weight:700; line-height:1.45}
+.hg-text span{font-size:calc(var(--fs-s) * var(--ts)); color:var(--sub)}
+@media (hover:hover){ .home-gimul:hover{background:var(--row)} }
+/* 검색창 지우기(×) 버튼도 회색으로(브라우저 기본 파란색 대신) */
+#q::-webkit-search-cancel-button{-webkit-appearance:none; appearance:none; width:20px; height:20px; margin-left:8px; cursor:pointer; background:var(--sub);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E") center/contain no-repeat}
 </style>
 
 <div id="wrap">
@@ -1664,14 +1675,10 @@ render(DATA[0].id,true);
     try{ viewerStorage.setItem('teaNote.recent', JSON.stringify(list)); }catch(x){}
   }
   function homeBody(){
-    let h='<div class="home-go">'
-      +'<button type="button" data-go="lessons">수업노트<span>'+LESSON_DATA.length+'편</span></button>'
-      +'<button type="button" data-go="tasting">시음노트<span>'+TASTING_DATA.length+'개</span></button>'
-      +'<button type="button" data-go="chronology">연대기<span>시대별 연표</span></button>'
-      +'<button type="button" data-go="gimul">기물노트<span>'+GIMUL_DATA.length+'점</span></button></div>';
+    let h='';
     const rec=readRecent();
     if(rec.length){
-      h+='<div class="home-h">최근 수업노트</div><div class="home-card">';
+      h+='<div class="home-h">이어서 읽기</div><div class="home-card">';
       rec.forEach(function(v,i){
         const parts=String(v.path||'').split(' › ');
         const title=parts.length>1 ? parts.slice(1).join(' › ') : (parts[0]||'');
@@ -1680,6 +1687,16 @@ render(DATA[0].id,true);
         h+='<button type="button" class="home-t home-rec" data-i="'+i+'"><b>'+escFull(title||docLabel)+'</b><span>'+escFull(title?docLabel:kind)+'</span></button>';
       });
       h+='</div>';
+    }
+    // 오늘의 기물: 사진 있는 기물 가운데 날짜마다 하나(같은 날에는 늘 같은 기물)
+    const withPic=GIMUL_DATA.filter(d=>d.images && d.images.length);
+    if(withPic.length){
+      const now=new Date(), seed=now.getFullYear()*372+now.getMonth()*31+now.getDate();
+      const g=withPic[(seed*7919)%withPic.length];
+      const meta=[g.clay,g.type,g.artist].filter(Boolean).join(' · ');
+      h+='<div class="home-h">오늘의 기물</div><button type="button" class="home-gimul home-t" data-doc="'+escFull(g.id)+'">'
+        +'<img src="assets/gimul/'+encodeURIComponent(g.images[0])+'" alt="" loading="lazy">'
+        +'<span class="hg-text"><b>'+escFull(g.label)+'</b><span>'+escFull(meta)+'</span></span></button>';
     }
     h+='<div class="home-h">최근 시음노트</div><div class="home-card">';
     TASTING_DATA.slice(0,3).forEach(function(d){
@@ -1696,7 +1713,7 @@ render(DATA[0].id,true);
     curDoc='home'; curH1=null; curH2=null; secIndex=[];
     clearMarks();
     inner.dataset.doc='home';
-    inner.innerHTML='<header class="home-hero"><div class="hh-copy"><h1 class="hh-title">소격당 필기노트</h1><div class="hh-sub">~ 전설의 고수차를 찾아서 ~</div></div></header>';
+    inner.innerHTML='<header class="home-hero"><div class="hh-copy"><span class="hh-mark" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h13v3a6 6 0 0 1-6 6h-1a6 6 0 0 1-6-6z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H16.5"/><path d="M9 3.5v2.5"/><path d="M13 3.5v2.5"/><path d="M5 21h12"/></svg></span><h1 class="hh-title">소격당 필기노트</h1><div class="hh-sub">~ 전설의 고수차를 찾아서 ~</div></div></header>';
     inner.appendChild(homeWrap);
     const hb=document.createElement('div'); hb.id='homeBody'; hb.innerHTML=homeBody(); hb.hidden=!!lastTerm; inner.appendChild(hb);
     hb.querySelectorAll('[data-go]').forEach(function(b){ b.onclick=function(){ goCollection(b.dataset.go); }; });
