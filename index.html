@@ -591,6 +591,29 @@ html[data-text-size="large"] .home-go{grid-template-columns:1fr}
 .gimul-thumbs button{width:64px; height:64px; padding:0; border:2px solid transparent; border-radius:10px; overflow:hidden; background:var(--row); cursor:pointer}
 .gimul-thumbs button[aria-pressed="true"]{border-color:var(--ink)}
 .gimul-thumbs img{display:block; width:100%; height:100%; object-fit:cover}
+/* ---------- 휴대폰 아래 탭 막대: 홈 · 수업노트 · 시음노트 · 연대기 · 기물노트.
+   탭을 누르면 그 목차가 서랍으로 열린다. 글을 내려 읽을 때는 숨고, 올리면 다시 나온다 ---------- */
+#tabbar{display:none}
+@media (max-width:620px){
+  :root{--bar-h:64px}
+  #tabbar{position:fixed; left:0; right:0; bottom:0; z-index:25; display:grid; grid-template-columns:repeat(5,minmax(0,1fr));
+    height:calc(var(--bar-h) + env(safe-area-inset-bottom, 0px)); padding:6px 4px env(safe-area-inset-bottom, 0px);
+    background:var(--surface); border-top:1px solid var(--line); transition:transform .2s}
+  #tabbar button{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; min-width:0; padding:0; border:0; background:none;
+    color:var(--sub); font:inherit; font-size:var(--fs-s); font-weight:400; line-height:1.3; white-space:nowrap; cursor:pointer; -webkit-tap-highlight-color:transparent}
+  #tabbar .ic{display:flex; align-items:center; justify-content:center; width:52px; height:28px; border-radius:14px}
+  #tabbar button[aria-current="page"]{color:var(--ink); font-weight:700}
+  #tabbar button[aria-current="page"] .ic{background:var(--row)}
+  body.bar-hidden #tabbar{transform:translateY(100%)}
+  body.kb-open #tabbar{display:none}
+  #tocToggle,#nav #homeBtn{display:none!important}
+  #side .toc-tabs{display:none}
+  #side{height:calc(100% - var(--hdr-top) - var(--bar-h) - env(safe-area-inset-bottom, 0px)); max-height:calc(100% - var(--hdr-top) - var(--bar-h) - env(safe-area-inset-bottom, 0px))}
+  #scrim{bottom:calc(var(--bar-h) + env(safe-area-inset-bottom, 0px))}
+  #inner{padding-bottom:calc(var(--bar-h) + 96px + env(safe-area-inset-bottom, 0px))}
+  #nav{bottom:calc(var(--bar-h) + 12px + env(safe-area-inset-bottom, 0px)); transition:bottom .2s}
+  body.bar-hidden #nav,body.kb-open #nav{bottom:calc(14px + env(safe-area-inset-bottom, 0px))}
+}
 </style>
 
 <div id="wrap">
@@ -2109,6 +2132,61 @@ render(DATA[0].id,true);
   })();
   // 목차 안의 홈 탭은 쓰지 않는다 (홈은 머리줄 버튼으로)
   st.remove(); sp.remove();
+  // ---------- 휴대폰 아래 탭 막대 ----------
+  (function(){
+    const SV='<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">';
+    const TABS=[
+      ['home','홈','<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>'],
+      ['lessons','수업노트','<path d="M2 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H2z"/><path d="M22 5h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z"/>'],
+      ['tasting','시음노트','<path d="M4 9h13v3a6 6 0 0 1-6 6h-1a6 6 0 0 1-6-6z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H16.5"/><path d="M9 3.5v2.5"/><path d="M13 3.5v2.5"/><path d="M5 21h12"/>'],
+      ['chronology','연대기','<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'],
+      ['gimul','기물노트','<path d="M6 10h11v4a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5z"/><path d="M9.5 7h4"/><path d="M11.5 5v2"/><path d="M6 12.5H4.5L3 9.5"/><path d="M17 11h1.2a2 2 0 0 1 0 4H16.5"/>']
+    ];
+    const bar=document.createElement('nav'); bar.id='tabbar'; bar.setAttribute('aria-label','모음');
+    bar.innerHTML=TABS.map(x=>'<button type="button" data-k="'+x[0]+'"><span class="ic">'+SV+x[2]+'</svg></span><span>'+x[1]+'</span></button>').join('');
+    document.body.appendChild(bar);
+    const side=$('#side'), isOpen=()=>side.classList.contains('open');
+    // 서랍이 열려 있으면 서랍에 보이는 모음, 닫혀 있으면 지금 읽는 글의 모음을 표시
+    function current(){
+      if(isOpen()) return activeCollection;
+      if(curDoc==='home') return 'home';
+      return docCollection(ALL_DATA.find(d=>d.id===curDoc));
+    }
+    let lastDoc=curDoc;
+    function sync(){
+      const k=current();
+      bar.querySelectorAll('button').forEach(function(b){ if(b.dataset.k===k) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
+      if(isOpen() || curDoc!==lastDoc) document.body.classList.remove('bar-hidden');
+      lastDoc=curDoc;
+    }
+    bar.querySelectorAll('button').forEach(function(b){ b.onclick=function(){
+      const k=b.dataset.k;
+      if(k==='home'){ if(isOpen()) closeSide(); hbtn.click(); return; }
+      if(isOpen() && activeCollection===k){ closeSide(); return; }
+      if(activeCollection!==k){ setCollection(k,false); toc.scrollTop=0; }
+      if(!isOpen()) openSide();
+    }; });
+    const mo=new MutationObserver(sync);
+    mo.observe(side,{attributes:true, attributeFilter:['class']});
+    mo.observe(inner,{attributes:true, attributeFilter:['data-doc']});
+    mo.observe(toc,{attributes:true, subtree:true, attributeFilter:['aria-selected']});
+    // 손가락으로 내려 읽을 때는 막대를 숨기고, 올리면 다시 보인다(글을 열 때 저절로 움직이는 스크롤에는 반응하지 않는다)
+    let lastY=window.pageYOffset, touchedAt=0;
+    const touched=function(){ touchedAt=Date.now(); };
+    window.addEventListener('touchmove', touched, {passive:true});
+    window.addEventListener('wheel', touched, {passive:true});
+    window.addEventListener('scroll', function(){
+      const y=window.pageYOffset, dy=y-lastY;
+      if(Date.now()-touchedAt>1200){ lastY=y; return; }
+      if(Math.abs(dy)<8) return;
+      document.body.classList.toggle('bar-hidden', dy>0 && y>120 && !isOpen());
+      lastY=y;
+    },{passive:true});
+    // 글자를 입력하는 동안에는 막대를 치워 자판 위에 뜨지 않게 한다
+    document.addEventListener('focusin', function(e){ if(e.target.matches('input,textarea')) document.body.classList.add('kb-open'); });
+    document.addEventListener('focusout', function(){ document.body.classList.remove('kb-open'); });
+    sync();
+  })();
   search('');
   renderHome(true);
   updateHeaderHeight();
