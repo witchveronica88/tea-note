@@ -652,6 +652,7 @@ html[data-text-size="large"] .pager{grid-template-columns:1fr}
 .pager button{display:flex; flex-direction:column; gap:2px; min-width:0; padding:12px 14px; border:1px solid var(--line); border-radius:10px; background:var(--surface); color:var(--ink); font:inherit; text-align:left; cursor:pointer}
 .pager .pg-next{align-items:flex-end; text-align:right}
 .pg-k{font-size:calc(var(--fs-s) * var(--rs)); color:var(--sub); line-height:1.5}
+.pg-a{white-space:nowrap}
 .pg-t{font-size:calc(var(--fs-m) * var(--rs)); font-weight:700; line-height:1.45}
 @media (hover:hover){ .pager button:hover{background:var(--row)} }
 
@@ -1187,7 +1188,7 @@ function render(docId, scrollMode){
     if(!prev && !next) return '';
     const one=function(x,dir){
       if(!x) return '<span></span>';
-      return '<button type="button" class="pg-'+dir+'" data-doc="'+escFull(x.doc)+'"'+(x.idx!=null?' data-idx="'+x.idx+'"':'')+'><span class="pg-k">'+(dir==='prev' ? '← 이전'+(x.where?' · '+escFull(x.where):'') : (x.where?escFull(x.where)+' · ':'')+'다음 →')+'</span><span class="pg-t">'+escFull(x.label)+'</span></button>';
+      return '<button type="button" class="pg-'+dir+'" data-doc="'+escFull(x.doc)+'"'+(x.idx!=null?' data-idx="'+x.idx+'"':'')+'><span class="pg-k">'+(dir==='prev' ? '<span class="pg-a">← 이전</span>'+(x.where?' · '+escFull(x.where):'') : (x.where?escFull(x.where)+' · ':'')+'<span class="pg-a">다음 →</span>')+'</span><span class="pg-t">'+escFull(x.label)+'</span></button>';
     };
     return '<nav class="pager" aria-label="이전·다음 글">'+one(prev,'prev')+one(next,'next')+'</nav>';
   };
