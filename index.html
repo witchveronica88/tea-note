@@ -234,7 +234,7 @@ h4.b{font-size:calc(var(--fs-m) * var(--rs)); font-weight:700; line-height:1.55;
 
 p.b{margin:8px 0; line-height:1.85}
 p.bul{position:relative; padding-left:16px}
-p.bul::before{content:"\2022"; position:absolute; left:2px; color:var(--accent)}
+p.bul::before{content:"\2022"; position:absolute; left:2px; color:var(--sub)}
 p.i1{margin-left:4px}
 p.i2{margin-left:22px}
 p.i2.bul::before{content:"\25E6"; color:var(--sub)}
@@ -368,7 +368,7 @@ button:focus-visible,input:focus-visible,.doc-group-head:focus-visible,.toc-item
 .tasting-facts>div:first-child{border-top:0}
 .tasting-facts dt{flex:0 0 52px; margin:0; font-size:calc(var(--fs-s) * var(--rs)); color:var(--sub)}
 .tasting-facts dd{flex:1; min-width:0; margin:0; font-weight:700}
-.tasting-facts .fp-per{color:var(--accent)}
+.tasting-facts .fp-per{color:var(--ink)}
 .tasting-facts .fp-rec::before{content:'·'; margin:0 6px 0 2px}
 .tasting-facts .fp-rec{margin-left:0; font-size:calc(var(--fs-s) * var(--rs)); font-weight:400; color:var(--sub); white-space:nowrap}
 
@@ -627,6 +627,12 @@ button:focus-visible,input:focus-visible,.doc-group-head:focus-visible,.toc-item
 #q::-webkit-search-cancel-button{-webkit-appearance:none; appearance:none; width:20px; height:20px; margin-left:8px; cursor:pointer; background:var(--sub);
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E") center/contain no-repeat;
   mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E") center/contain no-repeat}
+/* ---------- 떠 있는 버튼은 쓸 수 있을 때만: 돌아갈 곳이 없으면 '뒤로'를, 맨 위에서는 '맨 위로'를 숨긴다 ---------- */
+#nav button:disabled,body.at-top #top{display:none}
+/* 홈에서 검색하는 동안에는 위쪽 찻잔·이름을 접어 결과가 바로 보이게 한다 */
+body.at-home.home-searching .home-hero{display:none}
+body.at-home.home-searching #homeSearch{margin-top:0}
+.sr-more{color:var(--sub)}
 </style>
 
 <div id="wrap">
@@ -1534,6 +1540,8 @@ q.onkeydown = function(e){ if(e.key==='Enter'){ e.preventDefault(); flushSearch(
 $('#prev').onclick = function(){ flushSearch(); stepMatch(-1); closeSide(); };
 $('#next').onclick = function(){ flushSearch(); stepMatch(1); closeSide(); };
 $('#top').onclick = function(){ pageScrollTo(1,'smooth'); };
+// '맨 위로'는 조금 내려왔을 때만 보인다(맨 위에서는 본문을 가리지 않게 숨김)
+(function(){ const upd=function(){ document.body.classList.toggle('at-top', window.pageYOffset<300); }; window.addEventListener('scroll', upd, {passive:true}); upd(); })();
 $('#menu').onclick = openSide;
 q.addEventListener('focus', function(){ if(isMobile() && q.value.trim()) openSide(); });
 q.addEventListener('input', function(){ if(isMobile() && q.value.trim()) openSide(); });
@@ -2082,7 +2090,7 @@ render(DATA[0].id,true);
   const _syncActive=syncActive;
   syncActive=function(){ if(curDoc==='home'){ crumbPath.innerHTML=''; return; } _syncActive(); };
   const _search=search;
-  search=function(t){ _search(t); const on=!!String(t||'').trim(); const hb=document.getElementById('homeBody'); if(hb) hb.hidden=on; };
+  search=function(t){ _search(t); const on=!!String(t||'').trim(); const hb=document.getElementById('homeBody'); if(hb) hb.hidden=on; document.body.classList.toggle('home-searching', on); };
   // ---------- 뒤로 버튼: 앱 안에서 이동한 기록을 거슬러 간다 ----------
   const backStack=[]; let navBusy=false, restoring=false;
   // 휴대폰 '뒤로'(안드로이드 뒤로 버튼·제스처, 브라우저 뒤로)도 앱 안에서 한 단계 돌아가게 한다.
