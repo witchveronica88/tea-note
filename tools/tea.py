@@ -308,6 +308,10 @@ def check(d=None, verbose=True):
             for sub in ('gimul', os.path.join('gimul', 't')):
                 if not os.path.isfile(os.path.join(ASSETS, sub, f)):
                     E(w, '사진 파일이 없음: assets/%s/%s' % (sub.replace(os.sep, '/'), f))
+    labels = [x['label'] for x in d.gimul]
+    for lb in sorted(set(labels)):
+        if labels.count(lb) > 1:
+            E('기물노트', '제목이 같은 기물이 있음(특징·별명에서 구별하는 말을 골라 맨 앞에 붙임): %r' % lb)
     want = sorted(d.gimul, key=lambda x: (CLAYS.index(x['clay']) if x['clay'] in CLAYS else 99, x['label']))
     if [x['id'] for x in want] != [x['id'] for x in d.gimul]:
         E('기물노트', '배열 순서가 흙 순서 → 이름 가나다순이 아님(tea.sort_gimul로 정렬)')
