@@ -25,6 +25,7 @@ GIMUL_KEY = 'window.__TEA_GIMUL='
 
 CLAYS = ['자니', '주니', '홍니', '단니', '백자', '기타', '미분류']   # 이 순서로 묶어 보여 준다
 GIMUL_TYPES = ['차호', '잔', '기타']
+CRAFTS = ['전수공', '반수공', '']
 SEASONS = ['봄', '여름', '가을', '겨울', '']
 SORTS = ['생차', '숙차', '우롱', '백차', '홍차', '녹차', '황차', '흑차']
 GRADES = ['고수', '단주', '단주급', '국유림', '차왕수', '황편', '']
@@ -257,11 +258,11 @@ def check(d=None, verbose=True):
                 E(w, '사진 파일이 없음: assets/' + f)
 
     # ---- 기물노트
-    keys_g = ['artist', 'blocks', 'clay', 'id', 'images', 'kind', 'label', 'price', 'type']
+    keys_g = ['artist', 'blocks', 'clay', 'craft', 'id', 'images', 'kind', 'label', 'price', 'shape', 'type']
     for x in d.gimul:
         w = x.get('id', '?') + ' ' + x.get('label', '')
         if sorted(x.keys()) != keys_g:
-            E(w, '기물 칸이 정해진 9개와 다름')
+            E(w, '기물 칸이 정해진 11개와 다름')
             continue
         if not re.fullmatch(r'g\d+', x['id']) or x['kind'] != 'gimul':
             E(w, "id는 g+번호, kind는 'gimul'")
@@ -272,6 +273,15 @@ def check(d=None, verbose=True):
             E(w, '이름(label)이 비어 있음')
         if x['clay'] not in CLAYS:
             E(w, 'clay(흙)는 %s 중 하나: %r' % ('·'.join(CLAYS), x['clay']))
+        if x['craft'] not in CRAFTS:
+            E(w, "craft(제작)는 전수공·반수공 중 하나(모르면 빈칸): %r" % x['craft'])
+        if re.search(r'[()（）]', x['label']):
+            E(w, '기물 제목에는 괄호를 쓰지 않음(시대·구별 말은 맨 앞에, 전수공·반수공은 craft 칸에)')
+        if re.search(r'전수공|반수공', x['label']):
+            E(w, '전수공·반수공은 제목이 아니라 craft 칸에 적음')
+        text_ok(w, x['shape'])
+        if x['shape'] and x['shape'] not in x['label']:
+            W(w, 'shape(기형)이 제목에 들어 있지 않음: %r' % x['shape'])
         if x['type'] not in GIMUL_TYPES:
             E(w, 'type(종류)은 %s 중 하나: %r' % ('·'.join(GIMUL_TYPES), x['type']))
         if x['price'] and not re.search(r'\d만 원', x['price']):
