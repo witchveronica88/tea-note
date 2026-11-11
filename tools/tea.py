@@ -274,8 +274,10 @@ def check(d=None, verbose=True):
             E(w, 'clay(흙)는 %s 중 하나: %r' % ('·'.join(CLAYS), x['clay']))
         if x['type'] not in GIMUL_TYPES:
             E(w, 'type(종류)은 %s 중 하나: %r' % ('·'.join(GIMUL_TYPES), x['type']))
-        if re.search(r'\d만원', x['price']):
-            W(w, "가격은 '350만 원'처럼 '만 원'을 띄어 씀: %r" % x['price'])
+        if x['price'] and not re.search(r'\d만 원', x['price']):
+            W(w, "가격에는 '350만 원'처럼 숫자+'만 원'(띄어 씀)이 들어가야 함: %r" % x['price'])
+        if re.search(r'\d만원|만 원(?=[가-힣])(?!대)', x['price']):
+            W(w, "'만 원' 뒤의 덧말은 띄어 씀('280만 원 정도'): %r" % x['price'])
         bl = x['blocks']
         if bl:
             if bl[0] != {'k': 'h1', 'text': '특징'}:
