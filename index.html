@@ -2098,7 +2098,16 @@ render(DATA[0].id,true);
     }
     searchIndex.forEach(function(d){ if(!d.isChr){ const g=collect(d); if(g) res.lessons.push(g); } });
     const toks=low.split(/\s+/).filter(Boolean);
+    // 번호 검색: '27' · '27번' → 시음노트·기물노트 27번, '기물 27' · '시음27' → 그 모음의 27번만
+    const nm=low.match(/^(기물|시음)?\s*(\d{1,3})\s*번?$/);
+    const byNo = nm && (nm[1] || nm[0].indexOf('번')>=0 || nm[2].length<=3) ? {coll:nm[1]||'', no:nm[2]} : null;
+    const numHit=function(d, coll, kind){ return byNo && (!byNo.coll || byNo.coll===coll) && String(d.id).replace(/^\D+/,'')===String(parseInt(byNo.no,10)); };
     TASTING_DATA.forEach(function(t){
+      if(byNo){
+        if(!numHit(t,'시음')) return;
+        const o={doc:t.id, idx:-1, gi:res.flat.length, html:'<span class="sr-t-year">'+escFull(String(t.year||''))+'</span>'+escFull(t.label||''), meta:[t.season?escFull(t.season):'', t.grade?escFull(t.grade):''].filter(Boolean).join(' · ')};
+        res.flat.push(o); res.tastings.push(o); res.total++; return;
+      }
       const yr=String(t.year||'');
       const hay=[yr, yr?yr+'년':'', /^\d{4}$/.test(yr)?yr.slice(2)+'년':'', t.season||'', t.label||''].join(' ').toLowerCase();
       if(!toks.length || !toks.every(function(k){ return hay.indexOf(k)>=0; })) return;
@@ -2109,6 +2118,11 @@ render(DATA[0].id,true);
     });
     // 기물노트: 이름·흙·종류·작가·가격·특징에서 찾는다(띄어 쓴 말은 모두 들어 있어야 함, 예: '주니 주봉')
     GIMUL_DATA.forEach(function(g){
+      if(byNo){
+        if(!numHit(g,'기물')) return;
+        const o={doc:g.id, idx:-1, gi:res.flat.length, html:escFull(g.label||''), meta:[escFull(gimulClayName(g.clay)), escFull(g.type)].filter(Boolean).join(' · ')};
+        res.flat.push(o); res.gimul.push(o); res.total++; return;
+      }
       const hay=[g.label, g.clay, gimulClayName(g.clay), g.type, g.shape, g.craft, g.artist, g.price].concat(g.blocks.map(function(b){ return b.text || plainText(b.html||''); })).join(' ').toLowerCase();
       if(!toks.length || !toks.every(function(k){ return hay.indexOf(k)>=0; })) return;
       const o={doc:g.id, idx:-1, gi:res.flat.length,
