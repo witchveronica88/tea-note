@@ -160,6 +160,9 @@ body.side-hidden #side{display:none}
 .tasting-item .t-label{flex:1; min-width:0; overflow-wrap:anywhere}
 .tasting-item .per100{flex:0 0 auto; margin-left:8px; color:var(--sub); font-weight:400; font-variant-numeric:tabular-nums; white-space:nowrap}
 .tasting-item.on .per100{color:var(--accent)}
+/* 연대기 목록: 두 줄(연도 + 그 해 내용의 첫 줄을 회색으로 한 줄만) */
+.chronology-year-item{display:flex; flex-direction:column; gap:1px; padding-top:6px; padding-bottom:6px}
+.cy-sum{overflow:hidden; display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; color:var(--sub); font-weight:400; line-height:1.4}
 /* 기물노트 목록: 작은 네모 사진 + 이름 + 흙·종류 */
 .gimul-item{display:flex; align-items:center; gap:12px; padding:6px 2px}
 .gimul-thumb{display:block; flex:0 0 44px; width:44px; height:44px; border-radius:8px; object-fit:cover; background:var(--row)}
@@ -376,12 +379,12 @@ body.side-hidden #tocToggle{left:22px}
 }
 
 /* ========== 11. 글 끝 이동 · 읽기 진행 막대 · 화면 전환 · 사진 크게 보기 ========== */
-/* 글 끝의 이전·다음: 본문과 가는 줄로 나누고, 작은 글씨로 조용히 둔다 */
+/* 글 끝의 이전·다음: 본문과 가는 줄로 나누고, 작은 회색 글씨로 조용히 둔다(본문보다 눈에 띄지 않게) */
 .pager{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin:48px 0 8px; padding-top:6px; border-top:1px solid var(--line)}
 html[data-text-size="large"] .pager{grid-template-columns:1fr; gap:0}
-.pager button{display:flex; flex-direction:column; min-width:0; min-height:44px; padding:10px 0; border:0; background:none; color:var(--ink); font:inherit; text-align:left; cursor:pointer}
+.pager button{display:flex; flex-direction:column; min-width:0; min-height:44px; padding:10px 0; border:0; background:none; color:var(--sub); font:inherit; text-align:left; cursor:pointer}
 .pager .pg-next{align-items:flex-end; text-align:right}
-.pg-k{font-size:calc(var(--fs-s) * var(--rs)); color:var(--sub); line-height:1.5}
+.pg-k{font-size:calc(var(--fs-s) * var(--rs)); line-height:1.5}
 .pg-a{white-space:nowrap}
 .pg-t{font-size:calc(var(--fs-s) * var(--rs)); line-height:1.5}
 @media (hover:hover){ .pager button:hover .pg-t{text-decoration:underline; text-underline-offset:3px} }
@@ -781,7 +784,11 @@ function buildSidebarOnce(){
           if(!year) return;
           const it=document.createElement('div');
           it.className='toc-item lv2 chronology-year-item'; it.setAttribute('role','button'); it.setAttribute('tabindex','0');
-          it.textContent=year; it.dataset.doc=chronologyDoc.id; it.dataset.block=blockIndex; it.dataset.row=rowIndex;
+          // 두 줄로 보인다: 연도 + 그 해 내용의 첫 줄(회색, 한 줄로 자름)
+          const firstCell=row.cells[1] ? (row.cells[1].querySelector('div')||row.cells[1]) : null;
+          const summary=firstCell ? String(firstCell.textContent||'').replace(/\s+/g,' ').trim() : '';
+          it.innerHTML='<span class="cy-year">'+escFull(year)+'</span>'+(summary ? '<span class="cy-sum">'+escFull(summary)+'</span>' : '');
+          it.dataset.doc=chronologyDoc.id; it.dataset.block=blockIndex; it.dataset.row=rowIndex;
           it.onclick=function(ev){ ev.stopPropagation(); gotoChronologyRow(chronologyDoc.id,blockIndex,rowIndex); };
           it.onkeydown=function(ev){ if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); it.click(); } };
           chronologySection.querySelector('.lesson-section-list').appendChild(it);
