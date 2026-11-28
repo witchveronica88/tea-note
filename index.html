@@ -525,7 +525,6 @@ button:focus-visible,input:focus-visible,.doc-group-head:focus-visible,.toc-item
 .toc-item,.tasting-item .t-label{color:var(--ink)}
 
 /* ---------- 빈 기록 안내 ---------- */
-.empty-note{margin:12px 0; padding:18px 16px; border:1px dashed var(--line); border-radius:10px; color:var(--sub); font-size:calc(var(--fs-m) * var(--rs)); text-align:center}
 
 /* ---------- 떠 있는 버튼: 같은 모양의 아이콘 ---------- */
 #nav button,#tocToggle{display:inline-flex; align-items:center; justify-content:center}
@@ -953,14 +952,13 @@ function buildSidebarOnce(){
       const bands=[[100,'100만 원 이상'],[50,'50만~100만 원'],[30,'30만~50만 원'],[0,'30만 원 미만']];
       const priced=TASTING_DATA.map(d=>({d:d,v:per100num(d)}));
       priced.filter(x=>x.v!==null).sort((x,y)=>y.v-x.v).forEach(x=>{ const band=bands.find(bd=>x.v>=bd[0]); add('p'+band[0],band[1],x.d); });
-      priced.filter(x=>x.v===null).forEach(x=>add('pnone','가격 없음',x.d));
     } else if(mode==='grade'){
       const order=['차왕수','단주','단주급','고수','국유림','황편'];
-      TASTING_DATA.forEach(d=>add('g'+(d.grade||''), d.grade||'등급 없음', d));
+      TASTING_DATA.filter(d=>d.grade).forEach(d=>add('g'+d.grade, d.grade, d));   // 가격순·등급별은 값이 있는 차만 보여 준다
       out.sort((x,y)=>{ const ix=order.indexOf(x.title), iy=order.indexOf(y.title); return (ix<0?99:ix)-(iy<0?99:iy); });
       out.forEach(g=>g.docs.sort((x,y)=>Number(y.year||0)-Number(x.year||0)));
     } else {
-      TASTING_DATA.forEach(d=>add('y'+(d.year||''), d.year ? d.year+'년' : '연도 미상', d));
+      TASTING_DATA.forEach(d=>add('y'+(d.year||''), d.year ? d.year+'년' : '그 밖', d));
       out.sort((x,y)=>x.key==='y'?1:y.key==='y'?-1:Number(y.key.slice(1))-Number(x.key.slice(1)));
     }
     return out;
@@ -1079,7 +1077,7 @@ function buildSidebarOnce(){
       const it=document.createElement('div');
       it.className='toc-item gimul-item'; it.setAttribute('role','button'); it.setAttribute('tabindex','0');
       it.dataset.doc=doc.id; it.dataset.note='true'; it.dataset.kind=doc.type;
-      const meta=[doc.type, /^(없음|모름)$/.test(doc.artist||'')?'':doc.artist, doc.price].filter(Boolean).join(' · ');
+      const meta=[doc.type, doc.artist, doc.price].filter(Boolean).join(' · ');
       it.innerHTML=(doc.images.length ? '<img class="gimul-thumb" src="assets/gimul/t/'+encodeURIComponent(doc.images[0])+'" alt="" loading="lazy">' : '<span class="gimul-thumb" aria-hidden="true"></span>')
         +'<span class="gimul-text"><span class="gimul-name">'+escFull(doc.label)+'</span>'+(meta?'<span class="gimul-meta">'+escFull(meta)+'</span>':'')+'</span>';
       it.onclick=(ev)=>{ ev.stopPropagation(); render(doc.id); if(window.innerWidth<=620) closeSide(); };
@@ -1209,7 +1207,7 @@ function render(docId, scrollMode){
     } else if(doc.price || doc.unit){
       price=escFull([doc.price,doc.unit].filter(Boolean).join(' / '));
     }
-    const facts=[['연도',doc.year ? escFull(doc.year+'년') : '미상'],['계절',escFull(doc.season||'')],['다류',escFull(doc.sort||'')],['등급',escFull(doc.grade||'')],['가격',price]].filter(x=>x[1]);
+    const facts=[['연도',doc.year ? escFull(doc.year+'년') : ''],['계절',escFull(doc.season||'')],['다류',escFull(doc.sort||'')],['등급',escFull(doc.grade||'')],['가격',price]].filter(x=>x[1]);
     h += '<dl class="tasting-facts">'+facts.map(x=>'<div><dt>'+x[0]+'</dt><dd>'+x[1]+'</dd></div>').join('')+'</dl>';
     if(doc.images && doc.images.length){
       h += '<div class="tasting-gallery">'+doc.images.map((src,i)=>'<figure role="button" tabindex="0" data-photo="'+i+'"><img src="assets/'+encodeURIComponent(src)+'" alt="'+escFull(doc.label)+' 테이스팅 기록 사진 '+(i+1)+'" onerror="var g=this.closest(\'.tasting-gallery\');this.closest(\'figure\').remove();if(g&&!g.children.length)g.remove();"></figure>').join('')+'</div>';
@@ -1270,7 +1268,9 @@ function render(docId, scrollMode){
     return pagerHtml(prev,next);
   };
   let openH2 = false, openH1 = false, lessonNumber = 0, lastH1 = -1;
-  doc.blocks.forEach((b,i)=>{
+  // 내용이 없으면 제목만 덩그러니 남지 않게 한다(시음노트의 '테이스팅 기록'처럼 제목 하나뿐인 경우)
+  const shownBlocks = doc.blocks.some(b=>b.k!=='h1') ? doc.blocks : (isLessonKind ? doc.blocks : []);
+  shownBlocks.forEach((b,i)=>{
     if(b.k==='h1'){
       if(openH2){ h+='</div>'; openH2=false; }
       if(openH1){ h+=secPager(lastH1)+'</div>'; }
@@ -1306,8 +1306,6 @@ function render(docId, scrollMode){
     const ic = b.ind>=56?'i3':b.ind>=40?'i2':b.ind>=20?'i1':'';
     h += '<p class="b '+ic+' '+(b.bul?'bul':'')+'"'+id+'>'+b.html+'</p>';
   });
-  if(doc.kind==='tasting' && !doc.blocks.some(b=>b.k!=='h1') && !(doc.images && doc.images.length)) h += '<p class="empty-note">아직 적어 둔 테이스팅 기록이 없어요.</p>';
-  if(doc.kind==='gimul' && !doc.blocks.length) h += '<p class="empty-note">아직 적어 둔 특징이 없어요.</p>';
   if(openH2) h += '</div>';
   if(openH1) h += secPager(lastH1)+'</div>';
   if(!isLessonKind){
@@ -1824,7 +1822,7 @@ render(DATA[0].id,true);
     return '수업노트';
   };
   updateSearchScope = function(){
-    q.placeholder = '수업·시음·연대기·기물노트 검색';
+    q.placeholder = '모든 노트에서 검색';   // 휴대폰 폭에서도 잘리지 않는 길이
     q.setAttribute('aria-label','전체 검색');
     const ss=document.getElementById('sideScope'); if(ss) ss.textContent='· '+collectionName(activeCollection);
   };

@@ -130,6 +130,13 @@ def check(d=None, verbose=True):
         if '  ' in s:
             W(where, '빈칸이 두 개 이어져 있음')
 
+    # 모르는 값은 빈칸으로 둔다. '없음'·'모름'·'미상' 같은 말을 적으면 화면에 그대로 보인다
+    PLACEHOLDER = re.compile(r'^(없음|모름|미상|불명|정보\s*없음|해당\s*없음|-|\?|N/?A)$', re.I)
+    for x in d.tastings + d.gimul:
+        for k, v in x.items():
+            if isinstance(v, str) and PLACEHOLDER.match(v.strip()):
+                E('%s %s' % (x.get('id', '?'), x.get('label', '')), "%s 칸에 %r — 모르면 빈칸으로 둔다" % (k, v))
+
     ids = [x['id'] for x in d.lessons + d.tastings + d.gimul]
     for i in set(ids):
         if ids.count(i) > 1:
