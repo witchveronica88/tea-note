@@ -246,14 +246,14 @@ def check(d=None, verbose=True):
             E(w, "첫 블록은 {k:h1, text:'테이스팅 기록'}")
         for n, b in enumerate(bl[1:], 1):
             at = '%s #%d' % (w, n)
+            # 맛·향이든 만든 사람·특가 같은 메모든 모든 줄에 점(불릿)을 단다(사용자 결정)
             if b.get('k') == 'p':
                 if sorted(b.keys()) != ['bul', 'html', 'ind', 'k'] or b['ind'] != 22 or b['bul'] is not True:
                     E(at, '기록 한 줄은 {k:p, html, ind:22, bul:true}')
-            elif b.get('k') == 'note':
-                if sorted(b.keys()) != ['html', 'k'] or not b['html'].startswith('※ '):
-                    E(at, "메모는 {k:note, html:'※ …'}")
+                elif b['html'].lstrip().startswith('※'):
+                    E(at, "시음노트 줄은 '※' 없이 쓴다(메모도 점 달린 한 줄): " + b['html'][:30])
             else:
-                E(at, '시음노트 블록은 p와 note만')
+                E(at, '시음노트 블록은 p(점 달린 한 줄)만 — 메모도 p로')
             if 'html' in b:
                 text_ok(at, b['html'])
                 for msg in _html_problems(b['html'], P_ALLOWED):
